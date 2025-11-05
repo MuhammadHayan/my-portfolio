@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:portfolio/views/home/mobile/introsection_mobile.dart';
+import 'package:portfolio/views/home/web/intro_section_web.dart';
+import '../../../core/utils/responsive.dart';
+
+class IntroSection extends StatelessWidget {
+  const IntroSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: Responsive.horizontalPadding(context),
+        vertical: Responsive.verticalPadding(context) / 2,
+      ),
+      color: colorScheme.surface.withOpacity(0.03),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Responsive.isMobile(context)
+            ? const IntroSectionMobile()
+            : const IntroSectionWeb(),
+      ),
+    );
+  }
+}
