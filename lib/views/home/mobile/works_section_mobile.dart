@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/work_viewmodel.dart';
+import 'package:portfolio/viewmodels/hover_provider.dart';
+import 'package:portfolio/views/home/widgets/hover_card.dart';
+import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class WorksSectionMobile extends StatelessWidget {
   const WorksSectionMobile({super.key});
@@ -9,100 +14,98 @@ class WorksSectionMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     final projects = context.watch<ProjectViewModel>().projects;
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // ✅ Responsive columns
-    int crossAxisCount;
-    if (screenWidth < 400) {
-      crossAxisCount = 1;
-    } else if (screenWidth < 800) {
-      crossAxisCount = 2;
-    } else {
-      crossAxisCount = 3;
-    }
-
-    // Card width based on column count
-    final cardWidth =
-        (screenWidth - (16 * 2) - (20 * (crossAxisCount - 1))) / crossAxisCount;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 16),
-      color: colorScheme.surface.withOpacity(0.03),
+      color: colorScheme.surface.withValues(alpha: 0.03),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "Projects",
-            style: textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: colorScheme.onSurface,
-            ),
+          SectionTitle(
+            padding: 7.w,
+            title: "Projects",
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 6.h),
 
-          // ✅ Responsive Wrap Grid
+          // ✅ Grid with 3 fixed columns
           Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.center,
+            spacing: 5,
+            runSpacing: 5,
             children: projects.map((project) {
-              return Container(
-                width: cardWidth.clamp(160, 400), // safe min/max width
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.1),
+              return ChangeNotifierProvider(
+                create: (_) => HoverProvider(),
+                child: SizedBox(
+                  width: 180,
+                  height: 180,
+                  child: HoverCard(
+                    index: projects.indexOf(project),
+                    child: _ProjectCard(
+                      image: project.image,
+                      title: project.title,
+                      description: project.description,
+                      index: projects.indexOf(project),
+                    ),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withOpacity(0.06),
-                      blurRadius: 16,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(16)),
-                      child: Image.asset(
-                        project.image,
-                        height: 160,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            project.title,
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.onSurface,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            project.description,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurface.withOpacity(0.7),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
               );
             }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProjectCard extends StatelessWidget {
+  final String image;
+  final String title;
+  final String description;
+  final int? index;
+
+  const _ProjectCard(
+      {required this.image,
+      required this.title,
+      required this.description,
+      this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final hoverState = context.watch<HoverProvider>();
+    final hovered = hoverState.isHovered(index ?? 0);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // ✅ center vertically
+        //crossAxisAlignment: CrossAxisAlignment.center, // ✅ center horizontally
+        children: [
+          Image.asset(
+            image,
+            width: 80,
+            height: 80,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: hovered
+                  ? AppColors.accent
+                  : Theme.of(context).colorScheme.onSurface,
+              fontSize: 13,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            description,
+            textAlign: TextAlign.center,
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
+              fontSize: 11,
+            ),
           ),
         ],
       ),

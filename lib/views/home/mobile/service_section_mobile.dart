@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/service_viewmodel.dart';
+import 'package:portfolio/viewmodels/hover_provider.dart';
+import 'package:portfolio/views/home/widgets/hover_card.dart';
+import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
 
 class ServiceSectionMobile extends StatefulWidget {
@@ -48,9 +52,6 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 
-    final double sectionHeight = size.height * 0.4;
-    final double cardWidth = size.width * 0.78;
-
     return Container(
       color: colorScheme.surface,
       padding: EdgeInsets.symmetric(
@@ -61,18 +62,15 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            "What I Do",
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                ),
+          const SectionTitle(
+            title: "What I Do",
           ),
-          SizedBox(height: size.height * 0.03),
+
+          const SizedBox(height: 20),
 
           // ✅ Prevent overflow by constraining height
           SizedBox(
-            height: sectionHeight,
+            height: 200,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -106,9 +104,18 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
                       ),
                     );
                   },
-                  child: _ServiceCard(
-                    service: s,
-                    width: cardWidth,
+                  // ✅ Wrap each service card in hover functionality
+                  child: ChangeNotifierProvider(
+                    create: (_) => HoverProvider(),
+                    child: HoverCard(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      borderRadius: 20,
+                      index: i,
+                      child: _ServiceCard(
+                        service: s,
+                        index: i,
+                      ),
+                    ),
                   ),
                 );
               },
@@ -122,75 +129,49 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
 
 class _ServiceCard extends StatelessWidget {
   final dynamic service;
-  final double width;
+  final int? index;
 
-  const _ServiceCard({
-    required this.service,
-    required this.width,
-  });
+  const _ServiceCard({required this.service, this.index});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-
-    final double iconSize = size.width * 0.10;
-    final double titleFontSize = size.width * 0.04;
-    final double descFontSize = size.width * 0.025;
+    final hoverState = context.watch<HoverProvider>();
+    final hovered = hoverState.isHovered(index ?? 0);
 
     return Center(
-      child: Container(
-        width: width,
-        padding: EdgeInsets.symmetric(
-          vertical: size.height * 0.02,
-          horizontal: size.width * 0.05,
-        ),
-        margin: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-        decoration: BoxDecoration(
-          color: colorScheme.surfaceVariant,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: colorScheme.primary.withOpacity(0.25)),
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(service.icon, size: iconSize, color: colorScheme.primary),
-            SizedBox(height: size.height * 0.015),
-            Text(
-              service.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
-                    fontSize: titleFontSize,
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(service.icon,
+              size: 50,
+              color: hovered
+                  ? AppColors.accent
+                  : Theme.of(context).colorScheme.onSurface),
+          const SizedBox(height: 10),
+          Text(
+            service.title,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: hovered
+                      ? AppColors.accent
+                      : Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10),
+          Flexible(
+            child: Text(
+              service.description,
               textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
+                    fontSize: 12,
+                  ),
             ),
-            SizedBox(height: size.height * 0.012),
-            Flexible(
-              child: Text(
-                service.description,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.7),
-                      fontSize: descFontSize,
-                      height: 1.5,
-                    ),
-                overflow: TextOverflow.fade,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

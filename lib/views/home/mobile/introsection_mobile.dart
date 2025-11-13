@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/utils/download_helper_stub.dart';
-import 'package:portfolio/core/utils/responsive.dart';
 import 'package:portfolio/viewmodels/intro_animation_provider.dart';
 import 'package:portfolio/views/home/widgets/animated_button.dart';
 import 'package:portfolio/views/home/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class IntroSectionMobile extends StatefulWidget {
   const IntroSectionMobile({super.key});
+
   @override
   State<IntroSectionMobile> createState() => _IntroSectionMobileState();
 }
@@ -37,12 +38,9 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final paddingX = Responsive.horizontalPadding(context);
-    final paddingY = Responsive.verticalPadding(context);
-    final size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: paddingX, vertical: paddingY),
+      padding: EdgeInsets.symmetric(vertical: 4.h),
       child: ChangeNotifierProvider.value(
         value: introAnimation,
         child: Consumer<IntroAnimationProvider>(
@@ -53,41 +51,49 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const ProfileCard(),
-                  SizedBox(height: paddingY * 0.7),
+                  SizedBox(height: 4.h),
                   Text(
                     "I'm Hayan Muhammad",
                     textAlign: TextAlign.center,
                     style: textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: 20.sp,
                     ),
                   ),
-                  SizedBox(height: paddingY * 0.2),
+                  SizedBox(height: 1.2.h),
                   Text(
                     provider.displayedTitle,
                     textAlign: TextAlign.center,
                     style: textTheme.titleMedium?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w600,
+                      fontSize: 18.sp,
                     ),
                   ),
-                  SizedBox(height: paddingY * 0.4),
+                  SizedBox(height: 2.h),
                   Text(
                     "I build clean, maintainable Flutter apps with a focus on performance and UX. "
                     "I enjoy turning complex ideas into delightful mobile experiences.",
                     textAlign: TextAlign.center,
-                    style: textTheme.bodyMedium?.copyWith(height: 1.6),
+                    style: textTheme.bodyMedium?.copyWith(
+                      //  height: 1.6,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                  SizedBox(height: paddingY * 0.6),
+                  SizedBox(height: 3.h),
                   AnimatedHoverButton(
+                    icon: Icons.download_rounded,
+                    width: 140,
+                    height: 40,
                     label: "Download CV",
                     onPressed: _onDownload,
-                    fontSize: size.width * 0.025,
+                    fontSize: 17.sp,
                   ),
-                  SizedBox(height: paddingY * 2),
+                  SizedBox(height: 18.h),
                   Text(
-                    "Available for freelance & full-time work.",
+                    "Available for freelance & full-time work",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: textTheme.bodySmall?.copyWith(fontSize: 15.sp),
                   ),
                 ],
               ),

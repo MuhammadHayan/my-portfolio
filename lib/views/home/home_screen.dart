@@ -151,8 +151,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
               // Floating scroll buttons
               Positioned(
-                right: 24,
-                bottom: 32,
+                right: 5,
+                bottom: 20,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -195,10 +195,12 @@ class _ScrollButton extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final iconColor = isDark ? Colors.white : Colors.black;
-    final borderColor = iconColor.withOpacity(0.5);
+
+    // ✅ Updated: use withValues(alpha: …)
+    final borderColor = iconColor.withValues(alpha: 0.5);
     final bgColor = isDark
-        ? Colors.white.withOpacity(0.08)
-        : Colors.black.withOpacity(0.05);
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.05);
 
     return AnimatedOpacity(
       opacity: enabled ? 1 : 0.3,

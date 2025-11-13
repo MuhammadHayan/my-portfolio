@@ -29,7 +29,8 @@ class MobileNavBar extends StatelessWidget {
     return AppBar(
       centerTitle: true,
       elevation: 4,
-      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+      backgroundColor:
+          Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
       title: Text(
         "< Hayan />",
         style: GoogleFonts.sacramento(
@@ -139,7 +140,7 @@ class MobileDrawer extends StatelessWidget {
                           themeVM.isDark
                               ? Icons.dark_mode_outlined
                               : Icons.light_mode_outlined,
-                          color: AppColors.accent,
+                          color: colorScheme.onSurface,
                           size: iconSize,
                         ),
                         const SizedBox(width: 10),
@@ -156,8 +157,8 @@ class MobileDrawer extends StatelessWidget {
                       scale: size.width < 380 ? 0.8 : 1.0,
                       child: CupertinoSwitch(
                         value: themeVM.isDark,
-                        activeColor: AppColors.accent,
-                        trackColor: Colors.grey.shade400,
+                        activeTrackColor: AppColors.accent,
+                        inactiveTrackColor: Colors.grey.shade400,
                         onChanged: (_) {
                           Navigator.pop(context);
                           themeVM.toggle();
@@ -186,7 +187,7 @@ class MobileDrawer extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
-      leading: Icon(icon, color: AppColors.accent, size: iconSize),
+      leading: Icon(icon, color: colorScheme.onSurface, size: iconSize),
       title: Text(
         title,
         style: TextStyle(

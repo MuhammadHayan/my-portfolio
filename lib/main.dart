@@ -8,6 +8,7 @@ import 'package:portfolio/viewmodels/service_viewmodel.dart';
 import 'package:portfolio/viewmodels/theme_viewmodels.dart';
 import 'package:portfolio/views/home/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'core/theme/app_theme.dart';
 
 void main() {
@@ -33,13 +34,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeVM = context.watch<ThemeViewModel>();
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Hayan's Portfolio",
-      themeMode: themeVM.isDark ? ThemeMode.dark : ThemeMode.light,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      home: const HomeScreen(),
-    );
+    return Sizer(builder: (context, orientation, screenType) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Hayan's Portfolio",
+        themeMode: themeVM.isDark ? ThemeMode.dark : ThemeMode.light,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        home: const HomeScreen(),
+      );
+    });
   }
 }

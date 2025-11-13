@@ -5,6 +5,7 @@ import 'package:portfolio/core/utils/responsive.dart';
 import 'package:portfolio/viewmodels/navbar_viewmodel.dart';
 import 'package:portfolio/viewmodels/theme_viewmodels.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class NavBar extends StatelessWidget {
   final NavBarViewModel navBarVM;
@@ -56,11 +57,11 @@ class NavBar extends StatelessWidget {
               color: theme.colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 0.4.h),
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: 3,
-            width: isSelected ? 40 : 0, // change width here
+            height: 0.3.h,
+            width: isSelected ? 4.w : 0, // change width here
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
               color: !isDark && isSelected ? Colors.black : null,
@@ -88,13 +89,16 @@ class NavBar extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: Responsive.horizontalPadding(context),
-                vertical: 16,
+                vertical: 1.6.h,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface.withOpacity(0.85),
+                color: Theme.of(context)
+                    .colorScheme
+                    .surface
+                    .withValues(alpha: 0.85),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -143,7 +147,7 @@ class NavBar extends StatelessWidget {
                             _navButton(context, "Contact", onContact,
                                 model.currentIndex == 3),
                             Padding(
-                              padding: const EdgeInsets.only(left: 12),
+                              padding: const EdgeInsets.only(bottom: 5),
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(50),
                                 onTap: themeVM.toggle,

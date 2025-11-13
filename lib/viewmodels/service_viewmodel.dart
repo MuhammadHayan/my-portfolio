@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:portfolio/data/service_model.dart';
 
 class ServiceViewModel extends ChangeNotifier {
@@ -15,22 +16,22 @@ class ServiceViewModel extends ChangeNotifier {
 
   final List<ServiceModel> services = [
     ServiceModel(
-      icon: Icons.design_services_outlined,
+      icon: LucideIcons.palette,
       title: 'UI/UX Design',
       description:
-          'Designing elegant, intuitive interfaces that enhance user experience across platforms.',
+          'Crafting visually engaging and user-centered interface designs that blend aesthetics with functionality. Every design decision is guided by usability principles to deliver seamless digital experiences.',
     ),
     ServiceModel(
-      icon: Icons.code_rounded,
+      icon: LucideIcons.code2,
       title: 'Flutter Development',
       description:
-          'Building beautiful, high-performance apps for mobile, web, and desktop using Flutter.',
+          'Developing scalable, high-quality cross-platform applications using Flutter. I focus on clean architecture, maintainable code, and pixel-perfect implementation to bring ideas to life across mobile, web, and desktop.',
     ),
     ServiceModel(
-      icon: Icons.speed_rounded,
+      icon: LucideIcons.gauge,
       title: 'Performance Optimization',
       description:
-          'Improving app performance and responsiveness through efficient architecture and clean code.',
+          'Enhancing application efficiency by analyzing and refining code, optimizing resource usage, and ensuring smooth performance across devices. My goal is to deliver apps that are both fast and reliable.',
     ),
   ];
 }

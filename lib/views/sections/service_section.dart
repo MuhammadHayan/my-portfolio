@@ -12,11 +12,11 @@ class ServiceSection extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       width: double.infinity,
-      color: isDark ? colorScheme.surface : colorScheme.surfaceVariant,
+      color: isDark ? colorScheme.surface : colorScheme.surfaceContainerHighest,
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Responsive.horizontalPadding(context),
-          vertical: Responsive.verticalPadding(context) / 2,
+          vertical: Responsive.verticalPadding(context) / 1.5,
         ),
         child: Responsive.isMobile(context)
             ? const ServiceSectionMobile()

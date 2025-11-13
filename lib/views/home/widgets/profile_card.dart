@@ -1,6 +1,7 @@
 // lib/views/shared/profile_card.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart'; // for responsive sizing
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/profile_animation_provider.dart';
 
@@ -30,15 +31,16 @@ class ProfileCardState extends State<ProfileCard>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final base = size.width;
-
-    // Responsive profile image size (10–20% of width)
-    final targetSize = base < 600
-        ? base * 0.35
-        : base < 1024
-            ? base * 0.22
-            : base * 0.18;
+    // ✅ Use Sizer instead of manual MediaQuery
+    // Profile image takes up 35% of screen width on small, 22% on medium, 18% on large screens
+    double targetSize = 0;
+    if (100.w < 60.h) {
+      targetSize = 30.w; // small screens
+    } else if (100.w < 100.h) {
+      targetSize = 30.w; // medium screens
+    } else {
+      targetSize = 18.w; // large screens
+    }
 
     return ChangeNotifierProvider.value(
       value: animationProvider,
@@ -69,9 +71,10 @@ class ProfileCardState extends State<ProfileCard>
                           shape: BoxShape.circle,
                           gradient: SweepGradient(
                             colors: [
-                              AppColors.accent.withOpacity(0.9),
-                              AppColors.accent.withOpacity(0.4),
-                              AppColors.accent.withOpacity(0.9),
+                              // ✅ Replace deprecated withOpacity → withValues
+                              AppColors.accent.withValues(alpha: (0.9 * 255)),
+                              AppColors.accent.withValues(alpha: (0.4 * 255)),
+                              AppColors.accent.withValues(alpha: (0.9 * 255)),
                             ],
                             stops: const [0.0, 0.5, 1.0],
                           ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/data/contact_model.dart';
 import 'package:portfolio/viewmodels/contact_viewmodel.dart';
 import 'package:portfolio/viewmodels/hover_provider.dart';
 import 'package:portfolio/views/home/widgets/animated_card.dart';
 import 'package:portfolio/views/home/widgets/hover_card.dart';
+import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ContactSectionMobile extends StatelessWidget {
@@ -15,30 +18,18 @@ class ContactSectionMobile extends StatelessWidget {
     final contactVM = context.watch<ContactViewModel>();
     final contacts = contactVM.contacts;
     final visible = contactVM.visible;
-    final size = MediaQuery.of(context).size;
-
-    // Responsive layout: 2 per row (or 1 per row for very small screens)
-    final isNarrow = size.width < 380;
-    final crossAxisCount = isNarrow ? 1 : 2;
-    final cardWidth = (size.width / crossAxisCount) - 100;
 
     return VisibilityDetector(
       key: const Key('contact-section-mobile'),
       onVisibilityChanged: (info) =>
           contactVM.onVisibilityChanged(info.visibleFraction),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+        padding: EdgeInsets.symmetric(vertical: 5.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Get in Touch",
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
+            SectionTitle(padding: 5.w, title: "Get in Touch"),
+            const SizedBox(height: 10),
             Text(
               "I’m open to collaborations, freelance projects, or tech discussions.\nReach out through any platform below!",
               textAlign: TextAlign.center,
@@ -46,31 +37,40 @@ class ContactSectionMobile extends StatelessWidget {
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.7),
-                    height: 1.5,
+                        .withValues(alpha: (0.7 * 255)),
+                    fontSize: 13.sp,
                   ),
             ),
-            const SizedBox(height: 36),
+            const SizedBox(height: 20),
 
-            /// 🔹 Animated Grid of Contact Cards (2 per row)
+            /// 🔹 Animated Grid of Contact Cards
             LayoutBuilder(
               builder: (context, constraints) {
                 return Wrap(
                   alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
+                  spacing: 5,
+                  runSpacing: 5,
                   children: List.generate(contacts.length, (i) {
                     final contact = contacts[i];
-                    return AnimatedCard(
-                      index: i,
-                      visible: visible,
-                      child: ChangeNotifierProvider(
-                        create: (_) => HoverProvider(),
-                        child: HoverCard(
-                          width: cardWidth,
-                          index: i,
-                          onTap: contact.onTap,
-                          child: _ContactCardContent(contact: contact),
+                    return SizedBox(
+                      height: 100,
+                      width: 95,
+                      child: AnimatedCard(
+                        index: i,
+                        visible: visible,
+                        child: ChangeNotifierProvider(
+                          create: (_) => HoverProvider(),
+                          child: HoverCard(
+                            borderRadius: 10,
+                            index: i,
+                            onTap: contact.onTap,
+                            child: Center(
+                              child: _ContactCardContent(
+                                contact: contact,
+                                index: i,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     );
@@ -87,43 +87,44 @@ class ContactSectionMobile extends StatelessWidget {
 
 class _ContactCardContent extends StatelessWidget {
   final ContactModel contact;
-  const _ContactCardContent({required this.contact});
+  final int? index;
+  const _ContactCardContent({required this.contact, this.index});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final size = MediaQuery.of(context).size;
+    final hoverState = context.watch<HoverProvider>();
+    final hovered = hoverState.isHovered(index ?? 0);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: size.height * 0.02,
-        horizontal: size.width * 0.0,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(contact.icon, size: 25, color: colorScheme.primary),
-          const SizedBox(height: 12),
-          Text(
-            contact.title,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurface,
-                fontSize: 13),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          contact.icon,
+          size: 32,
+          color: hovered ? AppColors.accent : colorScheme.onSurface,
+        ),
+        const SizedBox(height: 5),
+        Text(
+          contact.title,
+          textAlign: TextAlign.center,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: hovered ? AppColors.accent : colorScheme.onSurface,
+            fontSize: 13.sp,
           ),
-          const SizedBox(height: 6),
-          Text(
-            contact.subtitle,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSurface.withOpacity(0.7), fontSize: 12
-                //  height: 1.4,
-                ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          contact.subtitle,
+          textAlign: TextAlign.center,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
+            fontSize: 12.sp,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -35,12 +35,12 @@ class IntroAnimationProvider extends ChangeNotifier {
 
     // 📝 Text intro animation
     textController = AnimationController(
-      duration: const Duration(milliseconds: 3000),
+      duration: const Duration(milliseconds: 7000),
       vsync: vsync,
     );
 
     slideAnimation = Tween<Offset>(
-      begin: const Offset(-0.1, 0),
+      begin: const Offset(-0.8, 0),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: textController!, curve: Curves.easeOutCubic),

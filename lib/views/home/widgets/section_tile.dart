@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
-  final Color? dividerColor;
-  final double fontSize;
-  final double thickness;
+  final double? padding;
 
-  const SectionTitle({
-    super.key,
-    required this.title,
-    this.dividerColor,
-    this.fontSize = 36,
-    this.thickness = 0.5,
-  });
+  const SectionTitle({super.key, required this.title, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +13,25 @@ class SectionTitle extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    final dividerClr = dividerColor ??
-        (theme.brightness == Brightness.dark
-            ? colorScheme.primary.withOpacity(0.6)
-            : Colors.black.withOpacity(0.4));
+    // ✅ Divider color with modern API
+    final dividerColor = theme.brightness == Brightness.dark
+        ? colorScheme.primary.withValues(alpha: (0.6 * 255))
+        : Colors.black.withValues(alpha: (0.4 * 255));
+
+    // ✅ Responsive sizing
+    final double fontSize = 18.sp;
+    final double horizontalPadding = padding ?? 8.6.w;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 45),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: Divider(
-              color: dividerClr,
-              thickness: thickness,
-              endIndent: 25,
+              color: dividerColor,
+              thickness: 0.5,
+              endIndent: 3.w,
             ),
           ),
           Text(
@@ -47,9 +44,9 @@ class SectionTitle extends StatelessWidget {
           ),
           Expanded(
             child: Divider(
-              color: dividerClr,
-              thickness: thickness,
-              indent: 25,
+              color: dividerColor,
+              thickness: 0.5,
+              indent: 3.w,
             ),
           ),
         ],

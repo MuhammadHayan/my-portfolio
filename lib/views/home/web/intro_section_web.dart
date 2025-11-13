@@ -4,7 +4,7 @@ import 'package:portfolio/views/home/widgets/profile_card.dart';
 import 'package:provider/provider.dart';
 import 'package:portfolio/core/utils/download_helper_web.dart';
 import 'package:portfolio/viewmodels/intro_animation_provider.dart';
-import '../../../core/utils/responsive.dart';
+import 'package:sizer/sizer.dart'; // ✅ Import sizer
 
 class IntroSectionWeb extends StatefulWidget {
   const IntroSectionWeb({super.key});
@@ -36,122 +36,134 @@ class _IntroSectionWebState extends State<IntroSectionWeb>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final paddingY = Responsive.verticalPadding(context);
 
     return ChangeNotifierProvider.value(
       value: introAnimation,
       child: Consumer<IntroAnimationProvider>(
         builder: (context, provider, _) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 👇 SlideTransition ONLY for the text column
-                  Expanded(
-                    flex: 7,
-                    child: SlideTransition(
-                      position: provider.slideAnimation,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 2.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 👇 Animated intro text section
+                Expanded(
+                  flex: 7,
+                  child: SlideTransition(
+                    position: provider.slideAnimation,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            AnimatedBuilder(
+                              animation: provider.handController!,
+                              builder: (context, child) {
+                                final angle = 0.5 *
+                                    (provider.handController!.value - 0.5);
+                                return Transform.rotate(
+                                  angle: angle,
+                                  alignment: Alignment.bottomCenter,
+                                  child: child,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 25.0),
                                 child: Text(
-                                  "Hi there, welcome to my space ",
+                                  "👋 ",
                                   style: textTheme.titleLarge?.copyWith(
-                                    fontSize: size.width * 0.02,
-                                    fontWeight: FontWeight.normal, // unbolded
+                                    fontSize: 22.sp,
                                   ),
                                 ),
                               ),
-                              AnimatedBuilder(
-                                animation: provider.handController!,
-                                builder: (context, child) {
-                                  final angle = 0.5 *
-                                      (provider.handController!.value - 0.5);
-                                  return Transform.rotate(
-                                    angle: angle,
-                                    alignment: Alignment.bottomCenter,
-                                    child: child,
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10.0),
-                                  child: Text(
-                                    " 👋",
-                                    style: textTheme.titleLarge?.copyWith(
-                                      fontSize: size.width * 0.03,
-                                    ),
-                                  ),
+                            ),
+                            Flexible(
+                              child: Text(
+                                "Welcome to my space, where ideas meet design and code",
+                                style: textTheme.titleLarge?.copyWith(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
-                            ],
-                          ),
-                          Text(
-                            "I'm Hayan Muhammad,",
-                            style: textTheme.headlineMedium?.copyWith(
-                              fontSize: size.width * 0.040,
-                              fontWeight: FontWeight.bold,
                             ),
+                          ],
+                        ),
+                        // 🧑‍💻 Name
+                        Text(
+                          "I'm Hayan Muhammad,",
+                          style: textTheme.headlineMedium?.copyWith(
+                            fontSize: 24.sp, // ✅ responsive name
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(height: paddingY * 0.1),
-                          Text(
-                            provider.displayedTitle,
-                            style: textTheme.titleLarge?.copyWith(
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: size.width * 0.03,
-                            ),
-                          ),
-                          SizedBox(height: paddingY * 0.3),
-                          ConstrainedBox(
-                            constraints:
-                                BoxConstraints(maxWidth: size.width * 0.44),
-                            child: Text(
-                              "I build clean, maintainable Flutter apps with a focus on performance and UX. "
-                              "I enjoy turning complex ideas into delightful mobile experiences.",
-                              style: textTheme.bodyLarge?.copyWith(
-                                  fontSize: size.width * 0.014, height: 1.6),
-                            ),
-                          ),
-                          SizedBox(height: paddingY * 0.5),
-                          AnimatedHoverButton(
-                            label: "Download CV",
-                            onPressed: _onDownload,
-                            fontSize: size.width * 0.013,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
 
-                  // 👇 Static Profile Card (no animation)
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const ProfileCard(),
-                          SizedBox(height: paddingY * 2.1),
-                          Text(
-                            "Available for freelance & full-time work",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodySmall,
+                        SizedBox(height: 1.h),
+
+                        // 💼 Animated title
+                        Text(
+                          provider.displayedTitle,
+                          style: textTheme.titleLarge?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20.sp, // ✅ responsive title
                           ),
-                        ],
-                      ),
+                        ),
+
+                        SizedBox(height: 3.h),
+
+                        // 📝 Description
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: 45.w),
+                          child: Text(
+                            "I craft high-quality Flutter applications that combine performance, scalability, and elegant design. "
+                            "My focus is on creating seamless user experiences that turn complex concepts into intuitive, engaging digital products.",
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontSize: 14
+                                  .sp, // ✅ slightly larger and more professional
+                              height:
+                                  1.7, // ✅ comfortable line spacing for readability
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: 6.h),
+
+                        // 📄 Button
+                        AnimatedHoverButton(
+                          icon: Icons.download_rounded, // ✅ Optional icon
+                          label: "DOWNLOAD CV",
+                          onPressed: _onDownload,
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              );
-            },
+                ),
+
+                // 👇 Profile Card Section
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 6.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const ProfileCard(),
+                        SizedBox(height: 27.h),
+                        Text(
+                          "Available for freelance & full-time work",
+                          textAlign: TextAlign.center,
+                          style: textTheme.bodySmall?.copyWith(
+                            fontSize: 12.sp, // ✅ responsive note text
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),

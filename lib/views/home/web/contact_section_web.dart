@@ -8,6 +8,7 @@ import 'package:portfolio/views/home/widgets/hover_card.dart';
 import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:sizer/sizer.dart'; // ✅ For responsive scaling
 
 class ContactWeb extends StatelessWidget {
   const ContactWeb({super.key});
@@ -17,6 +18,7 @@ class ContactWeb extends StatelessWidget {
     final contactVM = context.watch<ContactViewModel>();
     final contacts = contactVM.contacts;
     final visible = contactVM.visible;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return VisibilityDetector(
       key: const Key('contact-section'),
@@ -26,41 +28,46 @@ class ContactWeb extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SectionTitle(title: "Get in Touch"),
-          const SizedBox(height: 24),
+          SizedBox(height: 3.h),
+
+          // ✉️ Intro Text
           Text(
             "I’m open to collaborations, freelance projects, or tech discussions.\nReach out through any of the platforms below!",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                  fontSize: 12.sp,
+                  color: colorScheme.onSurface
+                      .withValues(alpha: 0.7), // ✅ FIXED: uses withValues
                 ),
           ),
-          const SizedBox(height: 50),
 
-          /// 🔹 Contact Cards Grid
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 900),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 20,
-              runSpacing: 20,
-              children: List.generate(contacts.length, (i) {
-                final contact = contacts[i];
-                return AnimatedCard(
+          SizedBox(height: 5.h),
+
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 1.w,
+            runSpacing: 1.w,
+            children: List.generate(contacts.length, (i) {
+              final contact = contacts[i];
+              return SizedBox(
+                height: 28.h,
+                width: 12.w,
+                child: AnimatedCard(
                   index: i,
                   visible: visible,
                   child: ChangeNotifierProvider(
                     create: (_) => HoverProvider(),
                     child: HoverCard(
-                      width: 200,
                       index: i,
-                      onTap: () {},
-                      child: _ContactCardContent(contact: contact, index: i),
+                      onTap: contact.onTap, // ✅ fixed here
+                      child: Center(
+                        child: _ContactCardContent(contact: contact, index: i),
+                      ),
                     ),
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
         ],
       ),
@@ -83,26 +90,29 @@ class _ContactCardContent extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(contact.icon,
-            size: 36,
-            color: hovered
-                ? AppColors.accent
-                : Theme.of(context).colorScheme.onSurface),
-        const SizedBox(height: 16),
+        Icon(
+          contact.icon,
+          size: 4.w,
+          color: hovered ? AppColors.accent : colorScheme.onSurface,
+        ),
+        SizedBox(height: 2.h),
         Text(
           contact.title,
           textAlign: TextAlign.center,
           style: theme.textTheme.titleMedium?.copyWith(
+            fontSize: 13.sp,
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 1.h),
         Text(
           contact.subtitle,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: colorScheme.onSurface.withOpacity(0.7),
+            fontSize: 12.sp,
+            color: colorScheme.onSurface
+                .withValues(alpha: 0.7), // ✅ FIXED: uses withValues
             height: 1.4,
           ),
         ),
