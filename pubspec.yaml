@@ -11,12 +11,12 @@ dependencies:
     sdk: flutter
   provider: ^6.1.5
   url_launcher: ^6.1.10
-  web: ^1.1.1
   font_awesome_flutter: ^10.12.0
   google_fonts: ^6.3.2
   visibility_detector: ^0.4.0+2
   sizer: ^3.1.3
   lucide_icons: ^0.257.0
+  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_test:
@@ -27,4 +27,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/files/hayan_resume.pdf
+    - assets/hayan_resume.pdf

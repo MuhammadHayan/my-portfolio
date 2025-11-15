@@ -1,14 +1,10 @@
-import 'package:web/web.dart' as web;
+import 'package:flutter/services.dart';
+import 'package:universal_html/html.dart' as html;
 
-Future<void> download(String path) async {
-  final filename = path.split('/').last;
-  final anchor = web.document.createElement('a') as web.HTMLAnchorElement;
+Future<void> downloadPdfWeb() async {
+  const pdfUrl = 'assets/hayan_resume.pdf';
 
-  anchor.href = path;
-  anchor.download = filename;
-  anchor.style.display = 'none';
-
-  web.document.body?.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
+  final anchor = html.AnchorElement(href: pdfUrl)
+    ..download = 'hayan_resume.pdf'
+    ..click();
 }
