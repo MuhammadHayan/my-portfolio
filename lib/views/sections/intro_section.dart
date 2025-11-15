@@ -14,15 +14,12 @@ class IntroSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: Responsive.horizontalPadding(context),
-        vertical: Responsive.verticalPadding(context),
+        vertical: Responsive.verticalPadding(context) / 2,
       ),
       color: colorScheme.surface.withValues(alpha: 0.03),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Responsive.isMobile(context)
-            ? const IntroSectionMobile()
-            : const IntroSectionWeb(),
-      ),
+      child: Responsive.isMobile(context)
+          ? const IntroSectionMobile()
+          : const IntroSectionWeb(),
     );
   }
 }

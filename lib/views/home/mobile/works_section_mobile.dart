@@ -59,7 +59,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile> {
 
         // Animated carousel similar to ServiceSectionMobile
         SizedBox(
-          height: 260,
+          height: 240,
           child: PageView.builder(
             controller: _pageController,
             physics: const BouncingScrollPhysics(),
@@ -140,7 +140,7 @@ class _ProjectCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image, width: 100, height: 100),
+          Image.asset(image, width: 120, height: 120),
           const SizedBox(height: 10),
           Text(
             title,
@@ -148,7 +148,7 @@ class _ProjectCard extends StatelessWidget {
             style: textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: hovered ? AppColors.accent : colorScheme.onSurface,
-              fontSize: 14,
+              fontSize: 16,
             ),
           ),
           const SizedBox(height: 10),

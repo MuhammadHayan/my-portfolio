@@ -109,7 +109,7 @@ class _IntroSectionWebState extends State<IntroSectionWeb>
                         ),
                       ),
 
-                      SizedBox(height: 3.h),
+                      SizedBox(height: 1.h),
 
                       // 📝 Description
                       ConstrainedBox(
@@ -126,7 +126,7 @@ class _IntroSectionWebState extends State<IntroSectionWeb>
                         ),
                       ),
 
-                      SizedBox(height: 6.h),
+                      SizedBox(height: 5.h),
 
                       // 📄 Button
                       AnimatedHoverButton(

@@ -89,7 +89,7 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
                     onPressed: _onDownload,
                     fontSize: 17.sp,
                   ),
-                  SizedBox(height: 18.h),
+                  SizedBox(height: 20.h),
                   Text(
                     "Available for freelance & full-time work",
                     textAlign: TextAlign.center,

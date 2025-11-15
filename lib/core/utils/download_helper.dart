@@ -5,7 +5,7 @@ Future<void> downloadAsset(String assetPath) async {
   final anchor = web.document.createElement('a') as web.HTMLAnchorElement;
 
   // Flutter Web debug → assets live in /flutter_assets/
-  final prefix = kDebugMode ? "/flutter_assets/" : "/";
+  const prefix = kDebugMode ? "/flutter_assets/" : "/";
   anchor.href = "$prefix$assetPath";
 
   anchor.download = assetPath.split('/').last;

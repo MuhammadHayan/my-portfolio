@@ -31,7 +31,7 @@ class ContactSectionMobile extends StatelessWidget {
             SectionTitle(padding: 3.w, title: "Get in Touch"),
             const SizedBox(height: 10),
             Text(
-              "I’m open to collaborations, freelance projects, or tech discussions.\nReach out through any platform below!",
+              "I’m open to collaborations, freelance projects, or tech discussions. Reach out through any platform below!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context)
@@ -53,8 +53,8 @@ class ContactSectionMobile extends StatelessWidget {
                   children: List.generate(contacts.length, (i) {
                     final contact = contacts[i];
                     return SizedBox(
-                      height: 120,
-                      width: 100,
+                      height: 110,
+                      width: 120,
                       child: AnimatedCard(
                         index: i,
                         visible: visible,
@@ -95,34 +95,37 @@ class _ContactCardContent extends StatelessWidget {
     final hoverState = context.watch<HoverProvider>();
     final hovered = hoverState.isHovered(index ?? 0);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          contact.icon,
-          size: 33,
-          color: hovered ? AppColors.accent : colorScheme.onSurface,
-        ),
-        const SizedBox(height: 5),
-        Text(
-          contact.title,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            contact.icon,
+            size: 33,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
-            fontSize: 14.sp,
           ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          contact.subtitle,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
-            fontSize: 12.sp,
+          const SizedBox(height: 5),
+          Text(
+            contact.title,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: hovered ? AppColors.accent : colorScheme.onSurface,
+              fontSize: 14.sp,
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 5),
+          Text(
+            contact.subtitle,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
+              fontSize: 12.sp,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
