@@ -35,9 +35,9 @@ class ProfileCardState extends State<ProfileCard>
     // Profile image takes up 35% of screen width on small, 22% on medium, 18% on large screens
     double targetSize = 0;
     if (100.w < 60.h) {
-      targetSize = 30.w; // small screens
+      targetSize = 35.w; // small screens
     } else if (100.w < 100.h) {
-      targetSize = 30.w; // medium screens
+      targetSize = 35.w; // medium screens
     } else {
       targetSize = 18.w; // large screens
     }

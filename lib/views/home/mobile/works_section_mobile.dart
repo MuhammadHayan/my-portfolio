@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/work_viewmodel.dart';
@@ -7,51 +8,110 @@ import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class WorksSectionMobile extends StatelessWidget {
+class WorksSectionMobile extends StatefulWidget {
   const WorksSectionMobile({super.key});
+
+  @override
+  State<WorksSectionMobile> createState() => _WorksSectionMobileState();
+}
+
+class _WorksSectionMobileState extends State<WorksSectionMobile> {
+  late PageController _pageController;
+  int _currentPage = 0;
+  Timer? _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.82);
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    _autoScrollTimer?.cancel();
+    _autoScrollTimer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (!mounted || !_pageController.hasClients) return;
+      _currentPage++;
+      _pageController.animateToPage(
+        _currentPage % 10000,
+        duration: const Duration(milliseconds: 700),
+        curve: Curves.easeInOutCubic,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoScrollTimer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final projects = context.watch<ProjectViewModel>().projects;
-    final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
-      color: colorScheme.surface.withValues(alpha: 0.03),
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SectionTitle(
-            padding: 7.w,
-            title: "Projects",
-          ),
-          SizedBox(height: 6.h),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SectionTitle(title: "Projects"),
+        SizedBox(height: 4.h),
 
-          // ✅ Grid with 3 fixed columns
-          Wrap(
-            spacing: 5,
-            runSpacing: 5,
-            children: projects.map((project) {
-              return ChangeNotifierProvider(
-                create: (_) => HoverProvider(),
-                child: SizedBox(
-                  width: 180,
-                  height: 180,
+        // Animated carousel similar to ServiceSectionMobile
+        SizedBox(
+          height: 260,
+          child: PageView.builder(
+            controller: _pageController,
+            physics: const BouncingScrollPhysics(),
+            itemCount: projects.isEmpty ? 1 : 10000,
+            itemBuilder: (context, index) {
+              final i = index % projects.length;
+              final project = projects[i];
+
+              return AnimatedBuilder(
+                animation: _pageController,
+                builder: (context, child) {
+                  double value = 0;
+                  if (_pageController.position.haveDimensions) {
+                    value = _pageController.page! - index;
+                  } else {
+                    value = (_currentPage - index).toDouble();
+                  }
+
+                  double scale = (1 - (value.abs() * 0.18)).clamp(0.85, 1.0);
+                  double opacity = (1 - (value.abs() * 0.5)).clamp(0.4, 1.0);
+                  double translateY = (1 - scale) * 30;
+
+                  return Opacity(
+                    opacity: opacity,
+                    child: Transform.translate(
+                      offset: Offset(0, translateY),
+                      child: Transform.scale(
+                        scale: scale,
+                        child: child,
+                      ),
+                    ),
+                  );
+                },
+                child: ChangeNotifierProvider(
+                  create: (_) => HoverProvider(),
                   child: HoverCard(
-                    index: projects.indexOf(project),
+                    index: i,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    borderRadius: 20,
                     child: _ProjectCard(
                       image: project.image,
                       title: project.title,
                       description: project.description,
-                      index: projects.indexOf(project),
+                      index: i,
                     ),
                   ),
                 ),
               );
-            }).toList(),
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -62,11 +122,12 @@ class _ProjectCard extends StatelessWidget {
   final String description;
   final int? index;
 
-  const _ProjectCard(
-      {required this.image,
-      required this.title,
-      required this.description,
-      this.index});
+  const _ProjectCard({
+    required this.image,
+    required this.title,
+    required this.description,
+    this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,36 +136,28 @@ class _ProjectCard extends StatelessWidget {
     final hoverState = context.watch<HoverProvider>();
     final hovered = hoverState.isHovered(index ?? 0);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+    return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // ✅ center vertically
-        //crossAxisAlignment: CrossAxisAlignment.center, // ✅ center horizontally
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            image,
-            width: 80,
-            height: 80,
-          ),
-          const SizedBox(height: 5),
+          Image.asset(image, width: 100, height: 100),
+          const SizedBox(height: 10),
           Text(
             title,
             textAlign: TextAlign.center,
             style: textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: hovered
-                  ? AppColors.accent
-                  : Theme.of(context).colorScheme.onSurface,
-              fontSize: 13,
+              color: hovered ? AppColors.accent : colorScheme.onSurface,
+              fontSize: 14,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Text(
             description,
             textAlign: TextAlign.center,
             style: textTheme.bodyMedium?.copyWith(
               color: colorScheme.onSurface.withValues(alpha: 0.7),
-              fontSize: 11,
+              fontSize: 12,
             ),
           ),
         ],

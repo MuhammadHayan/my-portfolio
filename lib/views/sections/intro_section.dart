@@ -14,7 +14,7 @@ class IntroSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: Responsive.horizontalPadding(context),
-        vertical: Responsive.verticalPadding(context) / 2,
+        vertical: Responsive.verticalPadding(context),
       ),
       color: colorScheme.surface.withValues(alpha: 0.03),
       child: Padding(

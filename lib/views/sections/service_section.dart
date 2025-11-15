@@ -16,7 +16,7 @@ class ServiceSection extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Responsive.horizontalPadding(context),
-          vertical: Responsive.verticalPadding(context) / 1.5,
+          vertical: Responsive.verticalPadding(context),
         ),
         child: Responsive.isMobile(context)
             ? const ServiceSectionMobile()

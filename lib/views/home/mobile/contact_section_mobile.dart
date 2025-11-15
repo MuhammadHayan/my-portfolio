@@ -28,7 +28,7 @@ class ContactSectionMobile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SectionTitle(padding: 5.w, title: "Get in Touch"),
+            SectionTitle(padding: 3.w, title: "Get in Touch"),
             const SizedBox(height: 10),
             Text(
               "I’m open to collaborations, freelance projects, or tech discussions.\nReach out through any platform below!",
@@ -38,7 +38,7 @@ class ContactSectionMobile extends StatelessWidget {
                         .colorScheme
                         .onSurface
                         .withValues(alpha: (0.7 * 255)),
-                    fontSize: 13.sp,
+                    fontSize: 14.sp,
                   ),
             ),
             const SizedBox(height: 20),
@@ -53,8 +53,8 @@ class ContactSectionMobile extends StatelessWidget {
                   children: List.generate(contacts.length, (i) {
                     final contact = contacts[i];
                     return SizedBox(
-                      height: 100,
-                      width: 95,
+                      height: 120,
+                      width: 100,
                       child: AnimatedCard(
                         index: i,
                         visible: visible,
@@ -64,11 +64,9 @@ class ContactSectionMobile extends StatelessWidget {
                             borderRadius: 10,
                             index: i,
                             onTap: contact.onTap,
-                            child: Center(
-                              child: _ContactCardContent(
-                                contact: contact,
-                                index: i,
-                              ),
+                            child: _ContactCardContent(
+                              contact: contact,
+                              index: i,
                             ),
                           ),
                         ),
@@ -98,11 +96,11 @@ class _ContactCardContent extends StatelessWidget {
     final hovered = hoverState.isHovered(index ?? 0);
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
           contact.icon,
-          size: 32,
+          size: 33,
           color: hovered ? AppColors.accent : colorScheme.onSurface,
         ),
         const SizedBox(height: 5),
@@ -112,7 +110,7 @@ class _ContactCardContent extends StatelessWidget {
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
-            fontSize: 13.sp,
+            fontSize: 14.sp,
           ),
         ),
         const SizedBox(height: 5),

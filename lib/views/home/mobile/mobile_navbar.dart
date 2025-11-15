@@ -66,7 +66,7 @@ class MobileDrawer extends StatelessWidget {
 
     // Responsive scaling
     final paddingH = size.width * 0.05;
-    final iconSize = size.width * 0.06;
+    final iconSize = size.width * 0.08;
     final fontSize = size.width * 0.045;
 
     return Drawer(
@@ -79,7 +79,7 @@ class MobileDrawer extends StatelessWidget {
           horizontal: paddingH,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // 🔹 Header / Logo
             Text(

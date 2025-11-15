@@ -49,18 +49,15 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<ServiceViewModel>();
-    final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 
     return Container(
-      color: colorScheme.surface,
       padding: EdgeInsets.symmetric(
         vertical: size.height * 0.05,
         horizontal: size.width * 0.04,
       ),
       width: double.infinity,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           const SectionTitle(
             title: "What I Do",
@@ -70,7 +67,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
 
           // ✅ Prevent overflow by constraining height
           SizedBox(
-            height: 200,
+            height: 260,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -164,7 +161,7 @@ class _ServiceCard extends StatelessWidget {
           Flexible(
             child: Text(
               service.description,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 12,
