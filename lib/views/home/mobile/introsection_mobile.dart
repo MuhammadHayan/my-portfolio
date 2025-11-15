@@ -31,7 +31,7 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
   }
 
   Future<void> _onDownload() async {
-    await downloadAsset('assets/files/hayan_cv.pdf');
+    await download("assets/files/hayan_resume.pdf");
   }
 
   @override

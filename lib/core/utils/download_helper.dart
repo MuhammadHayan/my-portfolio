@@ -1,14 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:web/web.dart' as web;
 
-Future<void> downloadAsset(String assetPath) async {
+Future<void> download(String path) async {
+  final filename = path.split('/').last;
   final anchor = web.document.createElement('a') as web.HTMLAnchorElement;
 
-  // Flutter Web debug → assets live in /flutter_assets/
-  const prefix = kDebugMode ? "/flutter_assets/" : "/";
-  anchor.href = "$prefix$assetPath";
-
-  anchor.download = assetPath.split('/').last;
+  anchor.href = path;
+  anchor.download = filename;
   anchor.style.display = 'none';
 
   web.document.body?.appendChild(anchor);
