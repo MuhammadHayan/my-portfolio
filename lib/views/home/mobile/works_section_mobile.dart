@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/work_viewmodel.dart';
 import 'package:portfolio/viewmodels/hover_provider.dart';
+import 'package:portfolio/viewmodels/intro_animation_provider.dart';
+import 'package:portfolio/views/home/widgets/animated_button.dart';
 import 'package:portfolio/views/home/widgets/hover_card.dart';
 import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
@@ -15,17 +17,24 @@ class WorksSectionMobile extends StatefulWidget {
   State<WorksSectionMobile> createState() => _WorksSectionMobileState();
 }
 
-class _WorksSectionMobileState extends State<WorksSectionMobile> {
+class _WorksSectionMobileState extends State<WorksSectionMobile>
+    with TickerProviderStateMixin {
   late PageController _pageController;
   int _currentPage = 0;
   Timer? _autoScrollTimer;
-  bool _showAllProjects = false; // Track if "See More" clicked
+  bool _showAllProjects = false;
+
+  late IntroAnimationProvider introAnimation;
 
   @override
   void initState() {
     super.initState();
+
     _pageController = PageController(viewportFraction: 0.82);
     _startAutoScroll();
+
+    introAnimation = IntroAnimationProvider();
+    introAnimation.initAnimations(this);
   }
 
   void _startAutoScroll() {
@@ -45,6 +54,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile> {
   void dispose() {
     _autoScrollTimer?.cancel();
     _pageController.dispose();
+    introAnimation.disposeAnimations();
     super.dispose();
   }
 
@@ -52,117 +62,118 @@ class _WorksSectionMobileState extends State<WorksSectionMobile> {
   Widget build(BuildContext context) {
     final projects = context.watch<ProjectViewModel>().projects;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SectionTitle(title: "Projects"),
-        SizedBox(height: 4.h),
+    return ChangeNotifierProvider.value(
+      value: introAnimation,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SectionTitle(title: "Projects"),
+          SizedBox(height: 4.h),
+          if (!_showAllProjects)
+            // Carousel view
+            SizedBox(
+              height: 250,
+              child: PageView.builder(
+                controller: _pageController,
+                physics: const BouncingScrollPhysics(),
+                itemCount: projects.isEmpty ? 1 : 10000,
+                itemBuilder: (context, index) {
+                  final i = index % projects.length;
+                  final project = projects[i];
 
-        if (!_showAllProjects)
-          // Carousel view
-          SizedBox(
-            height: 280,
-            child: PageView.builder(
-              controller: _pageController,
-              physics: const BouncingScrollPhysics(),
-              itemCount: projects.isEmpty ? 1 : 10000,
-              itemBuilder: (context, index) {
-                final i = index % projects.length;
-                final project = projects[i];
+                  return AnimatedBuilder(
+                    animation: _pageController,
+                    builder: (context, child) {
+                      double value = 0;
+                      if (_pageController.position.haveDimensions) {
+                        value = _pageController.page! - index;
+                      } else {
+                        value = (_currentPage - index).toDouble();
+                      }
 
-                return AnimatedBuilder(
-                  animation: _pageController,
-                  builder: (context, child) {
-                    double value = 0;
-                    if (_pageController.position.haveDimensions) {
-                      value = _pageController.page! - index;
-                    } else {
-                      value = (_currentPage - index).toDouble();
-                    }
+                      double scale =
+                          (1 - (value.abs() * 0.18)).clamp(0.85, 1.0);
+                      double opacity =
+                          (1 - (value.abs() * 0.5)).clamp(0.4, 1.0);
+                      double translateY = (1 - scale) * 30;
 
-                    double scale = (1 - (value.abs() * 0.18)).clamp(0.85, 1.0);
-                    double opacity = (1 - (value.abs() * 0.5)).clamp(0.4, 1.0);
-                    double translateY = (1 - scale) * 30;
-
-                    return Opacity(
-                      opacity: opacity,
-                      child: Transform.translate(
-                        offset: Offset(0, translateY),
-                        child: Transform.scale(
-                          scale: scale,
-                          child: child,
+                      return Opacity(
+                        opacity: opacity,
+                        child: Transform.translate(
+                          offset: Offset(0, translateY),
+                          child: Transform.scale(
+                            scale: scale,
+                            child: child,
+                          ),
+                        ),
+                      );
+                    },
+                    child: ChangeNotifierProvider(
+                      create: (_) => HoverProvider(),
+                      child: HoverCard(
+                        index: i,
+                        borderRadius: 20,
+                        child: _ProjectCard(
+                          image: project.image,
+                          title: project.title,
+                          description: project.description,
+                          index: i,
                         ),
                       ),
-                    );
-                  },
-                  child: ChangeNotifierProvider(
-                    create: (_) => HoverProvider(),
-                    child: HoverCard(
+                    ),
+                  );
+                },
+              ),
+            )
+          else
+            // Grid view
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: projects.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                childAspectRatio: 0.85,
+              ),
+              itemBuilder: (context, i) {
+                final project = projects[i];
+                return ChangeNotifierProvider(
+                  create: (_) => HoverProvider(),
+                  child: HoverCard(
+                    height: 290,
+                    index: i,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    borderRadius: 20,
+                    child: _ProjectCard(
+                      image: project.image,
+                      title: project.title,
+                      description: project.description,
                       index: i,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      borderRadius: 20,
-                      child: _ProjectCard(
-                        image: project.image,
-                        title: project.title,
-                        description: project.description,
-                        index: i,
-                      ),
                     ),
                   ),
                 );
               },
             ),
-          )
-        else
-          // Show all projects in a grid
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: projects.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 2.w,
-              crossAxisSpacing: 2.w,
-              childAspectRatio: 0.85,
-            ),
-            itemBuilder: (context, i) {
-              final project = projects[i];
-              return ChangeNotifierProvider(
-                create: (_) => HoverProvider(),
-                child: HoverCard(
-                  index: i,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  borderRadius: 20,
-                  child: _ProjectCard(
-                    image: project.image,
-                    title: project.title,
-                    description: project.description,
-                    index: i,
-                  ),
-                ),
-              );
+          SizedBox(height: 2.h),
+          AnimatedHoverButton(
+            label: _showAllProjects ? "See Less" : "See More",
+            icon: _showAllProjects
+                ? Icons.keyboard_arrow_up_rounded
+                : Icons.keyboard_arrow_down_rounded,
+            width: 35.w,
+            height: 6.h,
+            borderRadius: 10,
+            fontSize: 14,
+            onPressed: () {
+              setState(() {
+                _showAllProjects = !_showAllProjects;
+              });
             },
           ),
-
-        SizedBox(height: 2.h),
-
-        // See More / See Less button
-        TextButton(
-          onPressed: () {
-            setState(() {
-              _showAllProjects = !_showAllProjects;
-            });
-          },
-          child: Text(
-            _showAllProjects ? "See Less" : "See More",
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: AppColors.accent,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -191,7 +202,7 @@ class _ProjectCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(image, width: 120, height: 120),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Text(
           title,
           textAlign: TextAlign.center,
@@ -201,7 +212,7 @@ class _ProjectCard extends StatelessWidget {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Text(
           description,
           textAlign: TextAlign.center,
