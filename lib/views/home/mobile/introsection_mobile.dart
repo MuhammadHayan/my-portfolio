@@ -31,7 +31,14 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
   }
 
   Future<void> _onDownload() async {
-    await downloadPdfWeb();
+    final size = await DownloadHelper.downloadResume();
+    final formatted = DownloadHelper.formatFileSize(size);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Resume downloaded ($formatted)"),
+      ),
+    );
   }
 
   @override
