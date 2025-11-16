@@ -49,20 +49,18 @@ class ContactWeb extends StatelessWidget {
             runSpacing: 10,
             children: List.generate(contacts.length, (i) {
               final contact = contacts[i];
-              return SizedBox(
-                height: 28.h,
-                width: 12.w,
-                child: AnimatedCard(
-                  index: i,
-                  visible: visible,
-                  child: ChangeNotifierProvider(
-                    create: (_) => HoverProvider(),
-                    child: HoverCard(
-                      index: i,
-                      onTap: contact.onTap,
-                      child: Center(
-                        child: _ContactCardContent(contact: contact, index: i),
-                      ),
+              return AnimatedCard(
+                index: i,
+                visible: visible,
+                child: ChangeNotifierProvider(
+                  create: (_) => HoverProvider(),
+                  child: HoverCard(
+                    height: 28.h,
+                    width: 0.9.w,
+                    index: i,
+                    onTap: contact.onTap,
+                    child: Center(
+                      child: _ContactCardContent(contact: contact, index: i),
                     ),
                   ),
                 ),
@@ -92,7 +90,7 @@ class _ContactCardContent extends StatelessWidget {
       children: [
         Icon(
           contact.icon,
-          size: 4.w,
+          size: 3.2.w,
           color: hovered ? AppColors.accent : colorScheme.onSurface,
         ),
         SizedBox(height: 2.h),
@@ -100,7 +98,7 @@ class _ContactCardContent extends StatelessWidget {
           contact.title,
           textAlign: TextAlign.center,
           style: theme.textTheme.titleMedium?.copyWith(
-            fontSize: 13.sp,
+            fontSize: 12.5.sp,
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
           ),
@@ -110,10 +108,8 @@ class _ContactCardContent extends StatelessWidget {
           contact.subtitle,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodyMedium?.copyWith(
-            fontSize: 12.sp,
-            color: colorScheme.onSurface
-                .withValues(alpha: 0.7), // ✅ FIXED: uses withValues
-            height: 1.4,
+            fontSize: 11.5.sp,
+            color: colorScheme.onSurface.withValues(alpha: 0.7),
           ),
         ),
       ],

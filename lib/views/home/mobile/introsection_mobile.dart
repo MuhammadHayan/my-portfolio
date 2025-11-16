@@ -49,7 +49,7 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: EdgeInsets.only(top: 4.h),
+      padding: EdgeInsets.only(top: 6.h),
       child: ChangeNotifierProvider.value(
         value: introAnimation,
         child: Consumer<IntroAnimationProvider>(
@@ -81,22 +81,25 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
                   ),
                   SizedBox(height: 2.h),
                   Text(
-                    "I build clean, maintainable Flutter apps with a focus on performance and UX. "
-                    "I enjoy turning complex ideas into delightful mobile experiences.",
+                    "I craft high-quality Flutter applications that combine performance, scalability, and elegant design. "
+                    "My focus is on creating seamless user experiences that turn complex concepts into intuitive, engaging digital products.",
                     textAlign: TextAlign.center,
                     style: textTheme.bodyMedium?.copyWith(
                       //  height: 1.6,
                       fontSize: 16.sp,
                     ),
                   ),
-                  SizedBox(height: 3.h),
+                  SizedBox(height: 4.h),
                   AnimatedHoverButton(
+                    borderRadius: 10,
+                    border: 1,
+                    iconSize: 5.w,
                     icon: Icons.download_rounded,
-                    width: 140,
-                    height: 40,
+                    width: 50.w,
+                    height: 6.h,
                     label: "Download CV",
                     onPressed: _onDownload,
-                    fontSize: 17.sp,
+                    fontSize: 16,
                   ),
                   SizedBox(height: 20.h),
                   Text(

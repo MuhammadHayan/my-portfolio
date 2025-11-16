@@ -32,12 +32,12 @@ class ProjectViewModel extends ChangeNotifier {
     ProjectModel(
       title: "No Smoking",
       image: "assets/images/no_smoking.png",
-      description: "A flutter app promoting health awareness flutter app",
+      description: "A flutter app promoting health awareness",
     ),
     ProjectModel(
       title: "Nutri Planner",
       image: "assets/images/nutri_planner.png",
-      description: "Nutrition planner app designed with clean UI",
+      description: "Nutrition planner flutter app",
     ),
     ProjectModel(
       title: "Chef Selecta",
@@ -47,7 +47,7 @@ class ProjectViewModel extends ChangeNotifier {
     ProjectModel(
       title: "CanTrip",
       image: "assets/images/cantrip.png",
-      description: "A travel app developed in Flutter",
+      description: "A trip planner flutter app",
     ),
     ProjectModel(
       title: "Energy Saving",

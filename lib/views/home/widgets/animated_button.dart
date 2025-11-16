@@ -13,19 +13,20 @@ class AnimatedHoverButton extends StatelessWidget {
   final double fontSize;
   final double? width;
   final double? height;
+  final double border;
 
-  const AnimatedHoverButton({
-    super.key,
-    required this.label,
-    required this.onPressed,
-    this.icon,
-    this.iconSize = 17,
-    this.padding,
-    this.borderRadius = 5,
-    this.width,
-    this.height,
-    this.fontSize = 14,
-  });
+  const AnimatedHoverButton(
+      {super.key,
+      required this.label,
+      required this.onPressed,
+      this.icon,
+      this.iconSize = 17,
+      this.padding,
+      this.borderRadius = 5,
+      this.width,
+      this.height,
+      this.fontSize = 14,
+      this.border = 0.5});
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +52,8 @@ class AnimatedHoverButton extends StatelessWidget {
         : Colors.black87;
     final Color textColor = isDark ? Colors.white : Colors.black;
 
-    final double responsiveHeight = height ?? 60;
-    final double responsiveWidth = width ?? 230;
+    final double responsiveHeight = height ?? 10.h;
+    final double responsiveWidth = width ?? 17.w;
     final double responsiveFontSize = fontSize.sp;
     final double responsiveIconSize = iconSize.sp;
 
@@ -75,7 +76,7 @@ class AnimatedHoverButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(borderRadius),
                     border: provider.isHovered
                         ? null
-                        : Border.all(color: borderColor, width: 0.5),
+                        : Border.all(color: borderColor, width: border),
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Stack(
@@ -119,16 +120,15 @@ class AnimatedHoverButton extends StatelessWidget {
                         onPressed: onPressed,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          //  mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(width: 10),
+                            SizedBox(width: 1.w),
                             Text(
                               label,
                               style: TextStyle(
                                 fontSize: responsiveFontSize,
                               ),
                             ),
-                            const SizedBox(width: 10), // ✅ spacing
+                            SizedBox(width: 1.w), // ✅ spacing
                             if (icon != null) ...[
                               Icon(
                                 icon,

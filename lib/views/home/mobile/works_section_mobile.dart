@@ -72,7 +72,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
           if (!_showAllProjects)
             // Carousel view
             SizedBox(
-              height: 250,
+              height: 25.h,
               child: PageView.builder(
                 controller: _pageController,
                 physics: const BouncingScrollPhysics(),
@@ -111,6 +111,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
                     child: ChangeNotifierProvider(
                       create: (_) => HoverProvider(),
                       child: HoverCard(
+                        border: 1,
                         index: i,
                         borderRadius: 20,
                         child: ProjectCard(
@@ -136,34 +137,36 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
                 return ChangeNotifierProvider(
                   create: (_) => HoverProvider(),
                   child: HoverCard(
-                    height: 200,
-                    width: 35,
+                    border: 1,
+                    height: 22.h,
+                    width: 9.w,
                     index: i,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     borderRadius: 20,
                     child: ProjectCard(
                       image: project.image,
                       title: project.title,
                       description: project.description,
                       index: i,
-                      imageSize: 80,
-                      titleFontSize: 14,
-                      descriptionFontSize: 12,
+                      imageSize: 15,
+                      titleFontSize: 15,
+                      descriptionFontSize: 13,
                       spacing: 5,
                     ),
                   ),
                 );
               }),
             ),
-          SizedBox(height: 2.h),
+          SizedBox(height: 4.h),
           AnimatedHoverButton(
-            iconSize: 19,
+            border: 1,
+            iconSize: 5.w,
             label: _showAllProjects ? "Show Less" : "Show All",
             icon: _showAllProjects
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
-            width: 115,
-            height: 35,
+            width: 32.w,
+            height: 5.5.h,
             borderRadius: 50,
             fontSize: 14,
             onPressed: () {
@@ -198,9 +201,9 @@ class ProjectCard extends StatelessWidget {
     this.index,
 
     // ⬇️ Default carousel values (can override for grid)
-    this.imageSize = 120,
+    this.imageSize = 28,
     this.titleFontSize = 16,
-    this.descriptionFontSize = 12,
+    this.descriptionFontSize = 14,
     this.spacing = 5,
   });
 
@@ -216,8 +219,8 @@ class ProjectCard extends StatelessWidget {
       children: [
         Image.asset(
           image,
-          width: imageSize,
-          height: imageSize,
+          width: imageSize.w,
+          height: imageSize.w,
         ),
         SizedBox(height: spacing),
         Text(
@@ -226,7 +229,7 @@ class ProjectCard extends StatelessWidget {
           style: textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
-            fontSize: titleFontSize,
+            fontSize: titleFontSize.sp,
           ),
         ),
         SizedBox(height: spacing),
@@ -235,7 +238,7 @@ class ProjectCard extends StatelessWidget {
           textAlign: TextAlign.center,
           style: textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurface.withValues(alpha: 0.7),
-            fontSize: descriptionFontSize,
+            fontSize: descriptionFontSize.sp,
           ),
         ),
       ],

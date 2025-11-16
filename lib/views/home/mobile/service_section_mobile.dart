@@ -6,6 +6,7 @@ import 'package:portfolio/viewmodels/hover_provider.dart';
 import 'package:portfolio/views/home/widgets/hover_card.dart';
 import 'package:portfolio/views/home/widgets/section_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class ServiceSectionMobile extends StatefulWidget {
   const ServiceSectionMobile({super.key});
@@ -67,7 +68,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
 
           // ✅ Prevent overflow by constraining height
           SizedBox(
-            height: 265,
+            height: 30.h,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -105,6 +106,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
                   child: ChangeNotifierProvider(
                     create: (_) => HoverProvider(),
                     child: HoverCard(
+                      border: 1,
                       borderRadius: 20,
                       index: i,
                       child: _ServiceCard(
@@ -140,7 +142,7 @@ class _ServiceCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(service.icon,
-              size: 50,
+              size: 11.w,
               color: hovered
                   ? AppColors.accent
                   : Theme.of(context).colorScheme.onSurface),
@@ -152,7 +154,7 @@ class _ServiceCard extends StatelessWidget {
                       ? AppColors.accent
                       : Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 16.sp,
                 ),
             textAlign: TextAlign.center,
           ),
@@ -163,7 +165,7 @@ class _ServiceCard extends StatelessWidget {
               textAlign: TextAlign.justify,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurface.withValues(alpha: 0.7),
-                    fontSize: 12,
+                    fontSize: 14.sp,
                   ),
             ),
           ),

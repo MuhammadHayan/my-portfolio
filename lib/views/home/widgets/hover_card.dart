@@ -12,6 +12,7 @@ class HoverCard extends StatelessWidget {
   final double borderRadius;
   final VoidCallback? onTap;
   final int? index;
+  final double border;
 
   const HoverCard({
     super.key,
@@ -20,6 +21,7 @@ class HoverCard extends StatelessWidget {
     this.height = 280,
     this.padding = const EdgeInsets.symmetric(horizontal: 20),
     this.borderRadius = 15,
+    this.border = 0.5,
     this.onTap,
     this.index,
   });
@@ -54,7 +56,8 @@ class HoverCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: surfaceColor,
             borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(color: borderColor, width: hovered ? 1.5 : 0.5),
+            border:
+                Border.all(color: borderColor, width: hovered ? 1.5 : border),
             boxShadow: hovered
                 ? [
                     BoxShadow(

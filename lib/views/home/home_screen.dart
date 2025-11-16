@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       vertical: footerSpacing),
                                   child: Center(
                                     child: Text(
-                                      "© All rights reserved — Hayan Muhammad",
+                                      "©All rights reserved — Hayan Muhammad",
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       onPressed: homeProvider.scrollToPrevious,
                       enabled: homeProvider.currentSection > 0,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     _ScrollButton(
                       icon: Icons.keyboard_arrow_down_rounded,
                       onPressed: homeProvider.scrollToNext,

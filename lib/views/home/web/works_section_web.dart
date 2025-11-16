@@ -24,7 +24,7 @@ class WorksSectionWeb extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SectionTitle(title: "Projects"),
+          SectionTitle(padding: 2.w, title: "Projects"),
           SizedBox(height: 5.h),
           Wrap(
             spacing: 10,
@@ -76,7 +76,7 @@ class _ProjectCardContent extends StatelessWidget {
           borderRadius: BorderRadius.circular(2.w),
           child: Image.asset(
             project.image,
-            height: 8.w,
+            height: 6.w,
             fit: BoxFit.cover,
           ),
         ),

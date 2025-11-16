@@ -58,8 +58,9 @@ class ContactSectionMobile extends StatelessWidget {
                       child: ChangeNotifierProvider(
                         create: (_) => HoverProvider(),
                         child: HoverCard(
-                          height: 125,
-                          width: 27,
+                          border: 1,
+                          height: 14.h,
+                          width: 7.w,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           borderRadius: 10,
                           index: i,
@@ -99,7 +100,7 @@ class _ContactCardContent extends StatelessWidget {
       children: [
         Icon(
           contact.icon,
-          size: 33,
+          size: 8.w,
           color: hovered ? AppColors.accent : colorScheme.onSurface,
         ),
         const SizedBox(height: 5),
@@ -109,15 +110,16 @@ class _ContactCardContent extends StatelessWidget {
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
-            fontSize: 15.sp,
+            fontSize: 14.sp,
           ),
         ),
+        const SizedBox(height: 3),
         Text(
           contact.subtitle,
           textAlign: TextAlign.center,
           style: theme.textTheme.bodySmall?.copyWith(
             color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
-            fontSize: 14.sp,
+            fontSize: 13.sp,
           ),
         ),
       ],
