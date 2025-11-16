@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/views/home/widgets/animated_button.dart';
 import 'package:portfolio/views/home/widgets/profile_card.dart';

@@ -26,29 +26,25 @@ class WorksSectionWeb extends StatelessWidget {
         children: [
           const SectionTitle(title: "Projects"),
           SizedBox(height: 5.h),
-
-          /// 🔹 Projects Grid
           Wrap(
-            spacing: 1.w, // ✅ Responsive spacing
-            runSpacing: 1.w,
+            spacing: 10,
+            runSpacing: 10,
             alignment: WrapAlignment.center,
             children: List.generate(projects.length, (i) {
               final project = projects[i];
               final visible = worksVM.visible;
 
-              return SizedBox(
-                height: 38.5.h, // ✅ Responsive height
-                width: 19.5.w, // ✅ Responsive width
-                child: AnimatedCard(
-                  index: i,
-                  visible: visible,
-                  child: ChangeNotifierProvider(
-                    create: (_) => HoverProvider(),
-                    child: HoverCard(
-                      index: i,
-                      onTap: () {},
-                      child: _ProjectCardContent(project: project, index: i),
-                    ),
+              return AnimatedCard(
+                index: i,
+                visible: visible,
+                child: ChangeNotifierProvider(
+                  create: (_) => HoverProvider(),
+                  child: HoverCard(
+                    height: 250,
+                    width: 18,
+                    index: i,
+                    onTap: () {},
+                    child: _ProjectCardContent(project: project, index: i),
                   ),
                 ),
               );
@@ -73,7 +69,7 @@ class _ProjectCardContent extends StatelessWidget {
     final hovered = hoverState.isHovered(index ?? 0);
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         /// ✅ Responsive Image
         ClipRRect(

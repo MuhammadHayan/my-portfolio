@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/utils/download_helper.dart';
 import 'package:portfolio/viewmodels/intro_animation_provider.dart';

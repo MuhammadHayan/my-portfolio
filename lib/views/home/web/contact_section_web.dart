@@ -45,8 +45,8 @@ class ContactWeb extends StatelessWidget {
 
           Wrap(
             alignment: WrapAlignment.center,
-            spacing: 1.w,
-            runSpacing: 1.w,
+            spacing: 10,
+            runSpacing: 10,
             children: List.generate(contacts.length, (i) {
               final contact = contacts[i];
               return SizedBox(
@@ -88,7 +88,7 @@ class _ContactCardContent extends StatelessWidget {
     final hovered = hoverState.isHovered(index ?? 0);
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
           contact.icon,

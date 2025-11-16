@@ -141,16 +141,6 @@ class AnimatedHoverButton extends StatelessWidget {
                           ],
                         ),
                       ),
-
-                      // // ✅ Subtle border overlay
-                      // IgnorePointer(
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(borderRadius),
-                      //       border: Border.all(color: borderColor, width: 1),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
