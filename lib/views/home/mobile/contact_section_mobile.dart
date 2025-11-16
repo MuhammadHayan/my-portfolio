@@ -58,8 +58,8 @@ class ContactSectionMobile extends StatelessWidget {
                       child: ChangeNotifierProvider(
                         create: (_) => HoverProvider(),
                         child: HoverCard(
-                          height: 120,
-                          width: 25,
+                          height: 125,
+                          width: 27,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           borderRadius: 10,
                           index: i,
@@ -99,7 +99,7 @@ class _ContactCardContent extends StatelessWidget {
       children: [
         Icon(
           contact.icon,
-          size: 34,
+          size: 33,
           color: hovered ? AppColors.accent : colorScheme.onSurface,
         ),
         const SizedBox(height: 5),
@@ -112,7 +112,6 @@ class _ContactCardContent extends StatelessWidget {
             fontSize: 15.sp,
           ),
         ),
-        const SizedBox(height: 5),
         Text(
           contact.subtitle,
           textAlign: TextAlign.center,

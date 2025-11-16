@@ -59,7 +59,7 @@ class ContactWeb extends StatelessWidget {
                     create: (_) => HoverProvider(),
                     child: HoverCard(
                       index: i,
-                      onTap: contact.onTap, // ✅ fixed here
+                      onTap: contact.onTap,
                       child: Center(
                         child: _ContactCardContent(contact: contact, index: i),
                       ),

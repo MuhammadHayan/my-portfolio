@@ -113,7 +113,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
                       child: HoverCard(
                         index: i,
                         borderRadius: 20,
-                        child: _ProjectCard(
+                        child: ProjectCard(
                           image: project.image,
                           title: project.title,
                           description: project.description,
@@ -126,45 +126,45 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
               ),
             )
           else
-            // Grid view
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: projects.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                childAspectRatio: 0.85,
-              ),
-              itemBuilder: (context, i) {
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 5,
+              runSpacing: 5,
+              children: List.generate(projects.length, (i) {
                 final project = projects[i];
+
                 return ChangeNotifierProvider(
                   create: (_) => HoverProvider(),
                   child: HoverCard(
-                    height: 290,
+                    height: 200,
+                    width: 35,
                     index: i,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     borderRadius: 20,
-                    child: _ProjectCard(
+                    child: ProjectCard(
                       image: project.image,
                       title: project.title,
                       description: project.description,
                       index: i,
+                      imageSize: 80,
+                      titleFontSize: 14,
+                      descriptionFontSize: 12,
+                      spacing: 5,
                     ),
                   ),
                 );
-              },
+              }),
             ),
           SizedBox(height: 2.h),
           AnimatedHoverButton(
-            label: _showAllProjects ? "See Less" : "See More",
+            iconSize: 19,
+            label: _showAllProjects ? "Show Less" : "Show All",
             icon: _showAllProjects
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
-            width: 35.w,
-            height: 6.h,
-            borderRadius: 10,
+            width: 115,
+            height: 35,
+            borderRadius: 50,
             fontSize: 14,
             onPressed: () {
               setState(() {
@@ -178,17 +178,30 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
   }
 }
 
-class _ProjectCard extends StatelessWidget {
+class ProjectCard extends StatelessWidget {
   final String image;
   final String title;
   final String description;
   final int? index;
 
-  const _ProjectCard({
+  // ⬇️ Customizable parameters
+  final double imageSize;
+  final double titleFontSize;
+  final double descriptionFontSize;
+  final double spacing;
+
+  const ProjectCard({
+    super.key,
     required this.image,
     required this.title,
     required this.description,
     this.index,
+
+    // ⬇️ Default carousel values (can override for grid)
+    this.imageSize = 120,
+    this.titleFontSize = 16,
+    this.descriptionFontSize = 12,
+    this.spacing = 5,
   });
 
   @override
@@ -201,24 +214,28 @@ class _ProjectCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, width: 120, height: 120),
-        const SizedBox(height: 5),
+        Image.asset(
+          image,
+          width: imageSize,
+          height: imageSize,
+        ),
+        SizedBox(height: spacing),
         Text(
           title,
           textAlign: TextAlign.center,
           style: textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: hovered ? AppColors.accent : colorScheme.onSurface,
-            fontSize: 16,
+            fontSize: titleFontSize,
           ),
         ),
-        const SizedBox(height: 5),
+        SizedBox(height: spacing),
         Text(
           description,
           textAlign: TextAlign.center,
           style: textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurface.withValues(alpha: 0.7),
-            fontSize: 12,
+            fontSize: descriptionFontSize,
           ),
         ),
       ],

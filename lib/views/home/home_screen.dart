@@ -5,6 +5,7 @@ import 'package:portfolio/views/sections/intro_section.dart';
 import 'package:portfolio/views/sections/service_section.dart';
 import 'package:portfolio/views/sections/works_section.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import '../../../core/utils/responsive.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../viewmodels/home_provider.dart';
@@ -134,8 +135,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     child: Text(
                                       "© All rights reserved — Hayan Muhammad",
                                       textAlign: TextAlign.center,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            fontSize: 13.sp,
+                                          ),
                                     ),
                                   ),
                                 ),

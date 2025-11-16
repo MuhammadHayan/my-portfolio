@@ -30,45 +30,49 @@ class NavBar extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return GestureDetector(
-      onTap: () {
-        // Start manual selection to prevent scroll feedback flicker
-        navBarVM.startManualSelect();
-        navBarVM.setCurrentIndex(
-          ["Home", "Services", "Projects", "Contact"].indexOf(title),
-        );
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          // Start manual selection to prevent scroll feedback flicker
+          navBarVM.startManualSelect();
+          navBarVM.setCurrentIndex(
+            ["Home", "Services", "Projects", "Contact"].indexOf(title),
+          );
 
-        // Trigger the scroll/navigation
-        onPressed?.call();
+          // Trigger the scroll/navigation
+          onPressed?.call();
 
-        // Re-enable automatic updates shortly after (tune delay as needed)
-        Future.delayed(const Duration(milliseconds: 600), () {
-          navBarVM.endManualSelect();
-        });
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.5,
-              color: theme.colorScheme.onSurface,
+          // Re-enable automatic updates shortly after (tune delay as needed)
+          Future.delayed(const Duration(milliseconds: 600), () {
+            navBarVM.endManualSelect();
+          });
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                color: theme.colorScheme.onSurface,
+              ),
             ),
-          ),
-          SizedBox(height: 0.4.h),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: 0.3.h,
-            width: isSelected ? 4.w : 0, // change width here
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: !isDark && isSelected ? Colors.black : null,
-              gradient: isDark && isSelected ? AppColors.accentGradient : null,
+            SizedBox(height: 0.4.h),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              height: 0.3.h,
+              width: isSelected ? 4.w : 0, // change width here
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2),
+                color: !isDark && isSelected ? Colors.black : null,
+                gradient:
+                    isDark && isSelected ? AppColors.accentGradient : null,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

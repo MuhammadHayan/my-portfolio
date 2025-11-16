@@ -128,7 +128,7 @@ class AnimatedHoverButton extends StatelessWidget {
                                 fontSize: responsiveFontSize,
                               ),
                             ),
-                            const SizedBox(width: 15), // ✅ spacing
+                            const SizedBox(width: 10), // ✅ spacing
                             if (icon != null) ...[
                               Icon(
                                 icon,

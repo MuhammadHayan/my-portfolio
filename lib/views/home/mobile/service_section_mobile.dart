@@ -67,7 +67,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
 
           // ✅ Prevent overflow by constraining height
           SizedBox(
-            height: 260,
+            height: 265,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -105,7 +105,6 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
                   child: ChangeNotifierProvider(
                     create: (_) => HoverProvider(),
                     child: HoverCard(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       borderRadius: 20,
                       index: i,
                       child: _ServiceCard(
