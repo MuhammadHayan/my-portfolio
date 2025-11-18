@@ -49,7 +49,7 @@ class _IntroSectionMobileState extends State<IntroSectionMobile>
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: EdgeInsets.only(top: 6.h),
+      padding: EdgeInsets.only(top: 4.h),
       child: ChangeNotifierProvider.value(
         value: introAnimation,
         child: Consumer<IntroAnimationProvider>(

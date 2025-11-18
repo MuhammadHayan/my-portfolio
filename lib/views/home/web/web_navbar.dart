@@ -34,16 +34,11 @@ class NavBar extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          // Start manual selection to prevent scroll feedback flicker
           navBarVM.startManualSelect();
           navBarVM.setCurrentIndex(
             ["Home", "Services", "Projects", "Contact"].indexOf(title),
           );
-
-          // Trigger the scroll/navigation
           onPressed?.call();
-
-          // Re-enable automatic updates shortly after (tune delay as needed)
           Future.delayed(const Duration(milliseconds: 600), () {
             navBarVM.endManualSelect();
           });
@@ -63,7 +58,7 @@ class NavBar extends StatelessWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               height: 0.3.h,
-              width: isSelected ? 4.w : 0, // change width here
+              width: isSelected ? 4.w : 0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(2),
                 color: !isDark && isSelected ? Colors.black : null,
@@ -83,11 +78,12 @@ class NavBar extends StatelessWidget {
     final double logoFontSize = isTablet ? 22 : 24;
     final double spacing = isTablet ? 24 : 50;
 
-    // We rely on the provided navBarVM for animation and index state
     return ChangeNotifierProvider.value(
       value: navBarVM,
       child: Consumer2<NavBarViewModel, ThemeViewModel>(
         builder: (context, model, themeVM, _) {
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+
           return SlideTransition(
             position: model.slideAnimation,
             child: Container(
@@ -96,10 +92,13 @@ class NavBar extends StatelessWidget {
                 vertical: 1.6.h,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .colorScheme
-                    .surface
-                    .withValues(alpha: 0.85),
+                color: isDark
+                    ? Theme.of(context)
+                        .colorScheme
+                        .surface
+                        .withValues(alpha: 0.85)
+                    : null,
+                gradient: !isDark ? AppColors.containerlightGradient : null,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.05),

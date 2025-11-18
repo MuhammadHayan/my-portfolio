@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/viewmodels/intro_animation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart'; // Import Sizer
@@ -33,20 +34,6 @@ class AnimatedHoverButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final primary = colorScheme.primary;
-
-    final gradientColors = isDark
-        ? [
-            const Color(0xFF1E3A8A),
-            primary.withValues(alpha: (0.9 * 255)),
-            primary,
-          ]
-        : [
-            const Color(0xFF3B82F6),
-            primary.withValues(alpha: (0.8 * 255)),
-            primary,
-          ];
-
     final Color borderColor = isDark
         ? colorScheme.primary.withValues(alpha: (0.25 * 255))
         : Colors.black87;
@@ -89,14 +76,9 @@ class AnimatedHoverButton extends StatelessWidget {
                           widthFactor: provider.fillProgress,
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(borderRadius - 1.5),
-                              gradient: LinearGradient(
-                                colors: gradientColors,
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                              ),
-                            ),
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius - 1.5),
+                                gradient: AppColors.buttonGradient),
                           ),
                         ),
                       ),

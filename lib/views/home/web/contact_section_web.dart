@@ -27,7 +27,10 @@ class ContactWeb extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SectionTitle(title: "Get in Touch"),
+          SectionTitle(
+            title: "Get in Touch",
+            padding: 14.w,
+          ),
           SizedBox(height: 3.h),
 
           // ✉️ Intro Text

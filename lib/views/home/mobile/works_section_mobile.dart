@@ -72,7 +72,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
           if (!_showAllProjects)
             // Carousel view
             SizedBox(
-              height: 25.h,
+              height: 27.h,
               child: PageView.builder(
                 controller: _pageController,
                 physics: const BouncingScrollPhysics(),
@@ -138,19 +138,19 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
                   create: (_) => HoverProvider(),
                   child: HoverCard(
                     border: 1,
-                    height: 22.h,
-                    width: 9.w,
+                    height: 24.h,
+                    width: 9.3.w,
                     index: i,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    borderRadius: 20,
+                    borderRadius: 10,
                     child: ProjectCard(
                       image: project.image,
                       title: project.title,
                       description: project.description,
                       index: i,
-                      imageSize: 15,
+                      imageSize: 16,
                       titleFontSize: 15,
-                      descriptionFontSize: 13,
+                      descriptionFontSize: 14,
                       spacing: 5,
                     ),
                   ),
@@ -203,7 +203,7 @@ class ProjectCard extends StatelessWidget {
     // ⬇️ Default carousel values (can override for grid)
     this.imageSize = 28,
     this.titleFontSize = 16,
-    this.descriptionFontSize = 14,
+    this.descriptionFontSize = 15,
     this.spacing = 5,
   });
 

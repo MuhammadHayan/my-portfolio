@@ -43,6 +43,7 @@ class ServiceSectionWeb extends StatelessWidget {
                 child: ChangeNotifierProvider(
                   create: (_) => HoverProvider(),
                   child: HoverCard(
+                    width: 20,
                     index: i,
                     onTap: () {},
                     child: _ServiceCardContent(

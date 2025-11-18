@@ -17,13 +17,50 @@ class AppColors {
   static const Color surfaceLight = Color(0xFFFFFFFF);
   static const Color surfaceDark = Color(0xFF0F172A);
 
-  // Gradients
+  // Scaffold light theme gradient
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFFffffff), Color(0xFFf3f6ff)],
+    colors: [
+      Color(0xFFFFFFFF),
+      Color(0xFFF0F7FF), // frosted white-blue
+      Color(0xFFE4F0FF), // light sky blue
+      Color(0xFFD8EBFF), // slightly stronger blue
+    ],
+    stops: [0.0, 0.4, 0.75, 1.0],
   );
 
+  // Card light theme gradient
+  static const cardlightGradient = LinearGradient(
+    colors: [
+      Color(0xFFF9F7FF),
+      Color(0xFFFFFFFF),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Container light theme gradient
+  static const containerlightGradient = LinearGradient(
+    colors: [
+      Color(0xFFF4EFFF), // soft lavender
+      Color(0xFFE7F0FF), // soft blue
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Buton gradient theme
+  static const LinearGradient buttonGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF7F00FF), // vivid purple
+      Color(0xFF0072FF), // deep blue
+    ],
+  );
+
+  // navbar underline gradient
   static const LinearGradient accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

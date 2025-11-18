@@ -68,7 +68,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
 
           // ✅ Prevent overflow by constraining height
           SizedBox(
-            height: 30.h,
+            height: 35.h,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -142,7 +142,7 @@ class _ServiceCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(service.icon,
-              size: 11.w,
+              size: 12.w,
               color: hovered
                   ? AppColors.accent
                   : Theme.of(context).colorScheme.onSurface),
@@ -154,7 +154,7 @@ class _ServiceCard extends StatelessWidget {
                       ? AppColors.accent
                       : Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16.sp,
+                  fontSize: 17.sp,
                 ),
             textAlign: TextAlign.center,
           ),
@@ -165,7 +165,7 @@ class _ServiceCard extends StatelessWidget {
               textAlign: TextAlign.justify,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurface.withValues(alpha: 0.7),
-                    fontSize: 14.sp,
+                    fontSize: 15.sp,
                   ),
             ),
           ),

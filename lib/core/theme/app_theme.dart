@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTheme {
+  // ---------------- LIGHT THEME ----------------
   static final ThemeData light = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.lightBackground,
@@ -46,8 +47,26 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     ),
+
+    // ⭐ NEW MODERN GRADIENT FOR LIGHT MODE
+    extensions: const <ThemeExtension<dynamic>>[
+      LightGradientTheme(
+        backgroundGradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFFEAF1FF), // soft blue
+            Color(0xFFDDE7FF), // pale blue
+            Color(0xFFC3D4FF), // light lavender-blue
+            Color(0xFFEEF0FF), // soft white-lavender
+          ],
+          stops: [0.0, 0.35, 0.75, 1.0],
+        ),
+      ),
+    ],
   );
 
+  // ---------------- DARK THEME ----------------
   static final ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.transparent,
@@ -91,16 +110,18 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     ),
+
+    // ⭐ EXISTING DARK GRADIENT (unchanged)
     extensions: const <ThemeExtension<dynamic>>[
       DarkGradientTheme(
         backgroundGradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF0B1020), // base dark navy
-            Color(0xFF111A2E), // slightly lighter navy for depth
-            Color(0xFF1A233C), // deep blue tone
-            Color(0xFF243356), // accent reflection
+            Color(0xFF0B1020),
+            Color(0xFF111A2E),
+            Color(0xFF1A233C),
+            Color(0xFF243356),
           ],
           stops: [0.0, 0.4, 0.75, 1.0],
         ),
@@ -109,7 +130,37 @@ class AppTheme {
   );
 }
 
-// Custom extension for gradient theme
+// --------------------------------------------------------------------
+// ⭐ Custom Theme Extension: LIGHT GRADIENT
+// --------------------------------------------------------------------
+@immutable
+class LightGradientTheme extends ThemeExtension<LightGradientTheme> {
+  final LinearGradient backgroundGradient;
+
+  const LightGradientTheme({
+    required this.backgroundGradient,
+  });
+
+  @override
+  LightGradientTheme copyWith({LinearGradient? backgroundGradient}) {
+    return LightGradientTheme(
+      backgroundGradient: backgroundGradient ?? this.backgroundGradient,
+    );
+  }
+
+  @override
+  LightGradientTheme lerp(ThemeExtension<LightGradientTheme>? other, double t) {
+    if (other is! LightGradientTheme) return this;
+    return LightGradientTheme(
+      backgroundGradient:
+          LinearGradient.lerp(backgroundGradient, other.backgroundGradient, t)!,
+    );
+  }
+}
+
+// --------------------------------------------------------------------
+// ⭐ Custom Theme Extension: DARK GRADIENT (unchanged)
+// --------------------------------------------------------------------
 @immutable
 class DarkGradientTheme extends ThemeExtension<DarkGradientTheme> {
   final LinearGradient backgroundGradient;

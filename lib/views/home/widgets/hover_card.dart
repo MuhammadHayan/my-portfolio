@@ -17,7 +17,7 @@ class HoverCard extends StatelessWidget {
   const HoverCard({
     super.key,
     required this.child,
-    this.width = 20,
+    this.width = 22,
     this.height = 280,
     this.padding = const EdgeInsets.symmetric(horizontal: 20),
     this.borderRadius = 15,
@@ -54,7 +54,10 @@ class HoverCard extends StatelessWidget {
           height: height,
           padding: padding,
           decoration: BoxDecoration(
-            color: surfaceColor,
+            color: isDark ? surfaceColor : null, // solid for dark theme
+            gradient: isDark
+                ? null
+                : AppColors.cardlightGradient, // gradient for light theme
             borderRadius: BorderRadius.circular(borderRadius),
             border:
                 Border.all(color: borderColor, width: hovered ? 1.5 : border),

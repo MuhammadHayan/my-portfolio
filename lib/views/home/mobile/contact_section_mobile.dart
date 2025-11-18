@@ -59,8 +59,8 @@ class ContactSectionMobile extends StatelessWidget {
                         create: (_) => HoverProvider(),
                         child: HoverCard(
                           border: 1,
-                          height: 14.h,
-                          width: 7.w,
+                          height: 15.h,
+                          width: 8.w,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           borderRadius: 10,
                           index: i,

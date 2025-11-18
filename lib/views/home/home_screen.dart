@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/views/home/mobile/mobile_navbar.dart';
 import 'package:portfolio/views/sections/contact_section.dart';
 import 'package:portfolio/views/sections/intro_section.dart';
@@ -47,32 +48,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     final darkGradient =
         Theme.of(context).extension<DarkGradientTheme>()?.backgroundGradient;
+    final lightGradient = Theme.of(context).brightness == Brightness.light
+        ? AppColors.primaryGradient
+        : null;
 
     return ChangeNotifierProvider.value(
       value: navBarVM,
       child: Container(
         decoration: BoxDecoration(
-          gradient: Theme.of(context).brightness == Brightness.dark
-              ? darkGradient
-              : null,
-          color: Theme.of(context).brightness == Brightness.light
-              ? Theme.of(context).scaffoldBackgroundColor
-              : null,
-        ),
+            gradient: Theme.of(context).brightness == Brightness.dark
+                ? darkGradient
+                : lightGradient),
         child: Scaffold(
           backgroundColor: Colors.transparent,
 
           // Mobile: AppBar
           appBar: isMobile
-              ? PreferredSize(
-                  preferredSize: const Size.fromHeight(56),
-                  child: MobileNavBar(
-                    onHome: homeProvider.scrollToTop,
-                    onIntro: () => homeProvider.scrollToSection(0),
-                    onServices: () => homeProvider.scrollToSection(1),
-                    onWorks: () => homeProvider.scrollToSection(2),
-                    onContact: () => homeProvider.scrollToSection(3),
-                  ),
+              ? const PreferredSize(
+                  preferredSize: Size.fromHeight(56),
+                  child: MobileNavBar(),
                 )
               : null,
 

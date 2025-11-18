@@ -24,7 +24,7 @@ class WorksSectionWeb extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SectionTitle(padding: 2.w, title: "Projects"),
+          SectionTitle(padding: 7.w, title: "Projects"),
           SizedBox(height: 5.h),
           Wrap(
             spacing: 10,
@@ -40,8 +40,8 @@ class WorksSectionWeb extends StatelessWidget {
                 child: ChangeNotifierProvider(
                   create: (_) => HoverProvider(),
                   child: HoverCard(
-                    height: 250,
-                    width: 18,
+                    height: 230,
+                    width: 15,
                     index: i,
                     onTap: () {},
                     child: _ProjectCardContent(project: project, index: i),
