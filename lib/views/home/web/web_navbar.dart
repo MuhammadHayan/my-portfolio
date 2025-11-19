@@ -99,12 +99,13 @@ class NavBar extends StatelessWidget {
                         .withValues(alpha: 0.85)
                     : null,
                 gradient: !isDark ? AppColors.containerlightGradient : null,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: Colors.black26,
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
+                    spreadRadius: 0,
+                    offset: Offset(1, 1),
+                  )
                 ],
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(18),

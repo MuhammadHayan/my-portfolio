@@ -14,6 +14,14 @@ class ContactSection extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: isDark ? null : AppColors.containerlightGradient,
         color: isDark ? Theme.of(context).colorScheme.surface : null,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            spreadRadius: 0,
+            offset: Offset(1, 1),
+          )
+        ],
       ),
       width: double.infinity,
       child: Padding(

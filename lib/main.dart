@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return Sizer(builder: (context, orientation, screenType) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "Hayan's Portfolio",
+        title: "Hayan | Flutter Developer",
         themeMode: themeVM.isDark ? ThemeMode.dark : ThemeMode.light,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

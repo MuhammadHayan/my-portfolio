@@ -82,6 +82,14 @@ class ProfileCardState extends State<ProfileCard>
                             width: borderWidth,
                             color: Colors.transparent,
                           ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 0,
+                              offset: Offset(1, 1),
+                            )
+                          ],
                         ),
                       ),
                     ),

@@ -13,7 +13,7 @@ class NavBarViewModel extends ChangeNotifier {
   void init(TickerProvider vsync) {
     controller = AnimationController(
       vsync: vsync,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 3000),
     );
 
     slideAnimation = Tween<Offset>(

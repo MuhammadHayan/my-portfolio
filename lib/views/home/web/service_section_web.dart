@@ -31,8 +31,8 @@ class ServiceSectionWeb extends StatelessWidget {
           /// Services Grid
           Wrap(
             alignment: WrapAlignment.center,
-            spacing: 10,
-            runSpacing: 10,
+            spacing: 15,
+            runSpacing: 15,
             children: List.generate(services.length, (i) {
               final service = services[i];
               final visible = serviceVM.visible;

@@ -31,12 +31,14 @@ class AnimatedHoverButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final surfaceColor = Theme.of(context).colorScheme.surface;
+
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    // final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final Color borderColor = isDark
-        ? colorScheme.primary.withValues(alpha: (0.25 * 255))
-        : Colors.black87;
+    // final Color borderColor = isDark
+    //     ? colorScheme.primary.withValues(alpha: (0.25 * 255))
+    //     : Colors.black87;
     final Color textColor = isDark ? Colors.white : Colors.black;
 
     final double responsiveHeight = height ?? 10.h;
@@ -60,10 +62,21 @@ class AnimatedHoverButton extends StatelessWidget {
                   height: responsiveHeight,
                   width: responsiveWidth,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    border: provider.isHovered
+                    color: isDark ? surfaceColor : null, // solid for dark theme
+                    gradient: isDark
                         ? null
-                        : Border.all(color: borderColor, width: border),
+                        : AppColors
+                            .cardlightGradient, // gradient for light theme,
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    border: null,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        spreadRadius: 0,
+                        offset: Offset(1, 1),
+                      )
+                    ],
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Stack(

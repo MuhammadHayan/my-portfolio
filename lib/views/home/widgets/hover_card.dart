@@ -20,7 +20,7 @@ class HoverCard extends StatelessWidget {
     this.width = 22,
     this.height = 280,
     this.padding = const EdgeInsets.symmetric(horizontal: 20),
-    this.borderRadius = 15,
+    this.borderRadius = 10,
     this.border = 0.5,
     this.onTap,
     this.index,
@@ -32,12 +32,12 @@ class HoverCard extends StatelessWidget {
     final hoverState = context.watch<HoverProvider>();
     final hovered = hoverState.isHovered(index ?? 0);
 
-    final borderColor = hovered
-        ? (isDark ? AppColors.accent : Theme.of(context).colorScheme.primary)
-            .withValues(alpha: 0.7)
-        : isDark
-            ? AppColors.accent.withValues(alpha: 0.25)
-            : Colors.black.withValues(alpha: 0.25);
+    // final borderColor = hovered
+    //     ? (isDark ? AppColors.accent : Theme.of(context).colorScheme.primary)
+    //         .withValues(alpha: 0.7)
+    //     : isDark
+    //         ? AppColors.accent.withValues(alpha: 0.25)
+    //         : Colors.black.withValues(alpha: 0.25);
 
     final surfaceColor = Theme.of(context).colorScheme.surface;
 
@@ -48,7 +48,7 @@ class HoverCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 240),
+          duration: const Duration(milliseconds: 1000),
           curve: Curves.easeOutCubic,
           width: width.w,
           height: height,
@@ -59,25 +59,28 @@ class HoverCard extends StatelessWidget {
                 ? null
                 : AppColors.cardlightGradient, // gradient for light theme
             borderRadius: BorderRadius.circular(borderRadius),
-            border:
-                Border.all(color: borderColor, width: hovered ? 1.5 : border),
+            border: null,
             boxShadow: hovered
                 ? [
                     BoxShadow(
                       color: isDark
-                          ? AppColors.accent.withValues(alpha: 0.4)
-                          : Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withValues(alpha: 0.35),
-                      blurRadius: 28,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 8),
+                          ? AppColors.accent.withValues(alpha: 1)
+                          : Theme.of(context).colorScheme.primary,
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                      offset: const Offset(0, 4),
                     )
                   ]
-                : [],
+                : [
+                    const BoxShadow(
+                      color: Colors.black38,
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                      offset: Offset(0, 4),
+                    )
+                  ],
           ),
-          child: child,
+          child: Center(child: child),
         ),
       ),
     );
