@@ -77,7 +77,7 @@ class HoverCard extends StatelessWidget {
                   ]
                 : [],
           ),
-          child: Center(child: child),
+          child: child,
         ),
       ),
     );

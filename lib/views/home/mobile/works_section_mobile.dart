@@ -165,8 +165,8 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
             icon: _showAllProjects
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
-            width: 32.w,
-            height: 5.5.h,
+            width: 30.w,
+            height: 5.h,
             borderRadius: 50,
             fontSize: 14,
             onPressed: () {

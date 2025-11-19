@@ -52,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ? AppColors.primaryGradient
         : null;
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ChangeNotifierProvider.value(
       value: navBarVM,
       child: Container(
@@ -126,17 +128,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   padding: EdgeInsets.symmetric(
                                       vertical: footerSpacing),
                                   child: Center(
-                                    child: Text(
-                                      "©All rights reserved — Hayan Muhammad",
-                                      textAlign: TextAlign.center,
+                                      child: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
                                             fontSize: 13.sp,
                                           ),
+                                      children: [
+                                        const TextSpan(
+                                            text: "Designed & Crafted by "),
+                                        TextSpan(
+                                          text: "Muhammad Hayan",
+                                          style: TextStyle(
+                                              color: colorScheme.primary,
+                                              fontSize: 14.sp),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  )),
                                 ),
                               ],
                             ),

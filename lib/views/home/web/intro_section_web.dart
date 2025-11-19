@@ -99,7 +99,7 @@ class _IntroSectionWebState extends State<IntroSectionWeb>
                       ),
                       // 🧑‍💻 Name
                       Text(
-                        "I'm Hayan Muhammad,",
+                        "I'm Muhammad Hayan,",
                         style: textTheme.headlineMedium?.copyWith(
                           fontSize: 24.sp, // ✅ responsive name
                           fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class _IntroSectionWebState extends State<IntroSectionWeb>
                         constraints: BoxConstraints(maxWidth: 45.w),
                         child: Text(
                           "I craft high-quality Flutter applications that combine performance, scalability, and elegant design. "
-                          "My focus is on creating seamless user experiences that turn complex concepts into intuitive, engaging digital products.",
+                          "My focus is on creating seamless user experiences that turn complex ideas into intuitive, engaging digital products.",
                           style: textTheme.bodyMedium?.copyWith(
                             fontSize: 14
                                 .sp, // ✅ slightly larger and more professional

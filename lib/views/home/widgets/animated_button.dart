@@ -21,7 +21,7 @@ class AnimatedHoverButton extends StatelessWidget {
       required this.label,
       required this.onPressed,
       this.icon,
-      this.iconSize = 17,
+      this.iconSize = 15,
       this.padding,
       this.borderRadius = 5,
       this.width,
@@ -40,7 +40,7 @@ class AnimatedHoverButton extends StatelessWidget {
     final Color textColor = isDark ? Colors.white : Colors.black;
 
     final double responsiveHeight = height ?? 10.h;
-    final double responsiveWidth = width ?? 17.w;
+    final double responsiveWidth = width ?? 18.w;
     final double responsiveFontSize = fontSize.sp;
     final double responsiveIconSize = iconSize.sp;
 
