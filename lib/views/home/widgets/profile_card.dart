@@ -39,7 +39,7 @@ class ProfileCardState extends State<ProfileCard>
     } else if (100.w < 100.h) {
       targetSize = 45.w; // medium screens
     } else {
-      targetSize = 18.w; // large screens
+      targetSize = 20.w; // large screens
     }
 
     return ChangeNotifierProvider.value(
