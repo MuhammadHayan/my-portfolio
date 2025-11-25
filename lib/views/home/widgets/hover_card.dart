@@ -13,18 +13,19 @@ class HoverCard extends StatelessWidget {
   final VoidCallback? onTap;
   final int? index;
   final double border;
+  final bool isMobile;
 
-  const HoverCard({
-    super.key,
-    required this.child,
-    this.width = 22,
-    this.height = 280,
-    this.padding = const EdgeInsets.symmetric(horizontal: 20),
-    this.borderRadius = 10,
-    this.border = 0.5,
-    this.onTap,
-    this.index,
-  });
+  const HoverCard(
+      {super.key,
+      required this.child,
+      this.width = 22,
+      this.height = 280,
+      this.padding = const EdgeInsets.symmetric(horizontal: 20),
+      this.borderRadius = 10,
+      this.border = 0.5,
+      this.onTap,
+      this.index,
+      this.isMobile = false});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class HoverCard extends StatelessWidget {
     //         ? AppColors.accent.withValues(alpha: 0.25)
     //         : Colors.black.withValues(alpha: 0.25);
 
-    final surfaceColor = Theme.of(context).colorScheme.surface;
+    const surfaceColor = Color.fromARGB(255, 27, 43, 84);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -60,25 +61,27 @@ class HoverCard extends StatelessWidget {
                 : AppColors.cardlightGradient, // gradient for light theme
             borderRadius: BorderRadius.circular(borderRadius),
             border: null,
-            boxShadow: hovered
-                ? [
-                    BoxShadow(
-                      color: isDark
-                          ? AppColors.accent.withValues(alpha: 1)
-                          : Theme.of(context).colorScheme.primary,
-                      blurRadius: 8,
-                      spreadRadius: 0,
-                      offset: const Offset(0, 4),
-                    )
-                  ]
-                : [
-                    const BoxShadow(
-                      color: Colors.black38,
-                      blurRadius: 8,
-                      spreadRadius: 0,
-                      offset: Offset(0, 4),
-                    )
-                  ],
+            boxShadow: isMobile
+                ? null
+                : hovered
+                    ? [
+                        BoxShadow(
+                          color: isDark
+                              ? AppColors.accent.withValues(alpha: 1)
+                              : Theme.of(context).colorScheme.primary,
+                          blurRadius: 8,
+                          spreadRadius: 0,
+                          offset: const Offset(0, 4),
+                        )
+                      ]
+                    : [
+                        const BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 8,
+                          spreadRadius: 0,
+                          offset: Offset(0, 4),
+                        )
+                      ],
           ),
           child: Center(child: child),
         ),

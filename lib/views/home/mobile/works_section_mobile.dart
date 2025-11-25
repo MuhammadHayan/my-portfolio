@@ -71,8 +71,8 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
           SizedBox(height: 4.h),
           if (!_showAllProjects)
             // Carousel view
-            SizedBox(
-              height: 27.h,
+            AspectRatio(
+              aspectRatio: 16 / 11,
               child: PageView.builder(
                 controller: _pageController,
                 physics: const BouncingScrollPhysics(),
@@ -111,6 +111,7 @@ class _WorksSectionMobileState extends State<WorksSectionMobile>
                     child: ChangeNotifierProvider(
                       create: (_) => HoverProvider(),
                       child: HoverCard(
+                        isMobile: true,
                         border: 1,
                         index: i,
                         borderRadius: 20,

@@ -23,7 +23,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(viewportFraction: 0.82);
+    _pageController = PageController(viewportFraction: 0.79);
     _startAutoScroll();
   }
 
@@ -63,12 +63,9 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
           const SectionTitle(
             title: "What I Do",
           ),
-
           const SizedBox(height: 20),
-
-          // ✅ Prevent overflow by constraining height
-          SizedBox(
-            height: 35.h,
+          AspectRatio(
+            aspectRatio: 14 / 15,
             child: PageView.builder(
               controller: _pageController,
               physics: const BouncingScrollPhysics(),
@@ -106,6 +103,7 @@ class _ServiceSectionMobileState extends State<ServiceSectionMobile> {
                   child: ChangeNotifierProvider(
                     create: (_) => HoverProvider(),
                     child: HoverCard(
+                      isMobile: true,
                       border: 1,
                       borderRadius: 20,
                       index: i,
